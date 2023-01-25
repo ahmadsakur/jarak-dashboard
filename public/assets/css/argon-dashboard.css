@@ -6072,7 +6072,6 @@ textarea.form-control-lg {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1rem;
-  border-bottom: 1px solid #dee2e6;
   border-top-left-radius: calc(0.75rem - 1px);
   border-top-right-radius: calc(0.75rem - 1px);
 }
@@ -6099,7 +6098,6 @@ textarea.form-control-lg {
   align-items: center;
   justify-content: flex-end;
   padding: 0.75rem;
-  border-top: 1px solid #dee2e6;
   border-bottom-right-radius: calc(0.75rem - 1px);
   border-bottom-left-radius: calc(0.75rem - 1px);
 }
@@ -21144,7 +21142,7 @@ hr.horizontal.gray-light {
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
   display: block;
   overflow: auto;
-  height: calc(100vh - 360px);
+  height: calc(100vh - 150px);
 }
 .navbar-vertical.navbar-expand-xs > [class*=container] {
   flex-direction: column;
