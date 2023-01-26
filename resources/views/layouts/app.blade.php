@@ -31,20 +31,25 @@
     @endguest
 
     @auth
-        @if (in_array(request()->route()->getName(), ['sign-in-static', 'sign-up-static', 'login', 'register', 'recover-password', 'rtl', 'virtual-reality']))
+        @if (in_array(request()->route()->getName(),
+                ['sign-in-static', 'sign-up-static', 'login', 'register', 'recover-password', 'rtl', 'virtual-reality']))
             @yield('content')
         @else
-            @if (!in_array(request()->route()->getName(), ['profile', 'profile-static']))
+            @if (
+                !in_array(request()->route()->getName(),
+                    ['profile', 'profile-static']))
                 <div class="min-height-300 bg-primary position-absolute w-100"></div>
-            @elseif (in_array(request()->route()->getName(), ['profile-static', 'profile', 'dashboard']))
-                <div class="position-absolute w-100 min-height-300 top-0" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
+            @elseif (in_array(request()->route()->getName(),
+                    ['profile-static', 'profile', 'dashboard']))
+                <div class="position-absolute w-100 min-height-300 top-0"
+                    style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
                     <span class="mask bg-primary opacity-6"></span>
                 </div>
             @endif
             @include('layouts.navbars.auth.sidenav')
-                <main class="main-content border-radius-lg">
-                    @yield('content')
-                </main>
+            <main class="main-content border-radius-lg">
+                @yield('content')
+            </main>
         @endif
     @endauth
 
@@ -52,9 +57,10 @@
     <script src="assets/js/core/popper.min.js"></script>
     <script src="assets/js/core/bootstrap.min.js"></script>
     <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>  
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="assets/js/plugins/jquery.dataTables.js"></script>  
+    <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="assets/js/plugins/jquery.dataTables.js"></script>
 
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -64,9 +70,10 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-        $(document).ready( function () {
-            $('#datatable').DataTable();
-        } );
+        $(document).ready(function() {
+            $('#categoryDatatable').DataTable();
+
+        });
     </script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

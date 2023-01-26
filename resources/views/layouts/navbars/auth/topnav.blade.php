@@ -14,7 +14,33 @@
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             </div>
             <ul class="navbar-nav  justify-content-end">
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                
+                <li class="nav-item d-xl-none ps-3 pe-3 d-flex align-items-center">
+                    <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                        <div class="sidenav-toggler-inner">
+                            <i class="sidenav-toggler-line bg-white"></i>
+                            <i class="sidenav-toggler-line bg-white"></i>
+                            <i class="sidenav-toggler-line bg-white"></i>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item d-flex align-items-center dropdown pe-3">
+                    <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
+                        aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#signOutModal">
+                                <i class="fa fa-user me-sm-1"></i>
+                                <span>
+                                    Sign Out
+                                </span>
+                            </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-bell cursor-pointer"></i>
@@ -95,32 +121,6 @@
                                 </div>
                             </a>
                         </li>
-                    </ul>
-                </li>
-                <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line bg-white"></i>
-                            <i class="sidenav-toggler-line bg-white"></i>
-                            <i class="sidenav-toggler-line bg-white"></i>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item pe-3 d-flex align-items-center dropdown">
-                    <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                        <span class="d-sm-inline d-none ps-1">{{ Auth::user()->firstname }}</span>
-                    </a>
-                    <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
-                        aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
-                                data-bs-target="#signOutModal">
-                                <i class="fa fa-user me-sm-1"></i>
-                                <span>
-                                    Sign Out
-                                </span>
-                            </a></li>
                     </ul>
                 </li>
             </ul>

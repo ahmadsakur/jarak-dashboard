@@ -1,5 +1,13 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ResetPassword;
+use App\Http\Controllers\ChangePassword;    
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +25,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\ResetPassword;
-use App\Http\Controllers\ChangePassword;            
             
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
@@ -46,4 +47,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
 	Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+	Route::resource('category', CategoryController::class);
 });
