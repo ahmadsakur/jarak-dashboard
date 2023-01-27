@@ -3,9 +3,21 @@
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Category'])
     <div class="container-fluid py-4">
+        @if (isset($errors) && $errors->any())
+            <div class="alert border border-white alert-dismissible fade show text-white" role="alert">
+                @foreach ($errors->all() as $error)
+                    <span class="alert-icon"><i class="fa fa-warning"></i></span>
+                    <span class="alert-text"><strong>{{ $error }}</strong></span>
+                @endforeach
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
+
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h5>Category Table</h5>
                         <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal"

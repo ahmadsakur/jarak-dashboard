@@ -40,13 +40,11 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
-        // $validated = $request->validated();
-        // if ($validated->fails()) {
-        //     return redirect('/category')
-        //         ->withErrors($validated)
-        //         ->withInput();
-        // }
+        
+        $validated = $request->validated();
+        if ($validated->fails()) {
+            return redirect('/category')->with('toast_error', 'Invalid Data');
+        }
 
         Category::create([
             "name" => $request["name"],
@@ -54,7 +52,7 @@ class CategoryController extends Controller
             "description" => $request["description"],
         ]);
 
-        return redirect('/category');
+        return redirect('/category')->with('toast_success', 'Category Added Successfully');
     }
 
     /**
@@ -92,6 +90,9 @@ class CategoryController extends Controller
         //
 
         $validated = $request->validated();
+        if ($validated->fails()) {
+            return redirect('/category')->with('toast_error', 'Invalid Data');
+        }
 
         Category::where('id', $request['id'])->update([
             "name" => $request["name"],
@@ -99,7 +100,8 @@ class CategoryController extends Controller
             "description" => $request["description"],
         ]);
 
-        return redirect('/category');
+        return redirect('/category')->with('toast_success', 'Category Updated Successfully');
+
 
     }
 
@@ -112,6 +114,7 @@ class CategoryController extends Controller
     public function destroy(Request $request, $id)
     {
         Category::where('id', $request["id"])->delete();
-        return redirect('/category');
+        return redirect('/category')->with('toast_success', 'Category Deleted Successfully');
+    
     }
 }
