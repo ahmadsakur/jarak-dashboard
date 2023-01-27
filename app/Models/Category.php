@@ -15,5 +15,10 @@ class Category extends Model
         'slug',
         'description',
     ];
+
+    public static function getCategory($id){
+        $category = Category::where('id', $id)->get();
+        return $category;
+    }
       
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -49,7 +50,7 @@ class CategoryController extends Controller
 
         Category::create([
             "name" => $request["name"],
-            'slug' => Str::slug($request["name"],'-'),
+            'slug' => Str::slug($request["name"], '-'),
             "description" => $request["description"],
         ]);
 
@@ -62,9 +63,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $category = Category::getCategory($id);
+        return response()->json($category);
     }
 
     /**
@@ -73,7 +75,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Category $category, $id)
     {
         //
     }
@@ -85,9 +87,20 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         //
+
+        $validated = $request->validated();
+
+        Category::where('id', $request['id'])->update([
+            "name" => $request["name"],
+            'slug' => Str::slug($request["name"], '-'),
+            "description" => $request["description"],
+        ]);
+
+        return redirect('/category');
+
     }
 
     /**
@@ -96,8 +109,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, $id)
     {
-        //
+        Category::where('id', $request["id"])->delete();
+        return redirect('/category');
     }
 }
