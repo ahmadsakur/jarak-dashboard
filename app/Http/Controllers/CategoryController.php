@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        return view('pages.category');
+        $categories = Category::get();
+        return view('pages.category', compact('categories'));
     }
 
     /**
@@ -38,6 +40,20 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         //
+        // $validated = $request->validated();
+        // if ($validated->fails()) {
+        //     return redirect('/category')
+        //         ->withErrors($validated)
+        //         ->withInput();
+        // }
+
+        Category::create([
+            "name" => $request["name"],
+            'slug' => Str::slug($request["name"],'-'),
+            "description" => $request["description"],
+        ]);
+
+        return redirect('/category');
     }
 
     /**
