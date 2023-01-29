@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('imageUrl');
+            $table->boolean('isSoldOut');
             $table->foreignUuid('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->nullOnDelete()->onUpdate('cascade');
             $table->timestamps();

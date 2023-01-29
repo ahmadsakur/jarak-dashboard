@@ -41,10 +41,10 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         
-        $validated = $request->validated();
-        if ($validated->fails()) {
-            return redirect('/category')->with('toast_error', 'Invalid Data');
-        }
+        // $validated = $request->validated();
+        // if ($validated->fails()) {
+        //     return redirect('/category')->with('toast_error', 'Invalid Data');
+        // }
 
         Category::create([
             "name" => $request["name"],
