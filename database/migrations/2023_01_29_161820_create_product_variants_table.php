@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('product_variants', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('product_name');
-            $table->string('variant_name');
             $table->decimal('price', 9, 2);
             $table->foreignUuid('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
