@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -16,7 +17,8 @@ class ProductController extends Controller
     public function index()
     {
         //
-        return view('pages.product');
+        $categories = Category::all();
+        return view('pages.product', compact('categories'));
     }
 
     /**
@@ -37,7 +39,21 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        
+        // store image and get url path
+        $image = $request->file('thumbnail');
+        $image_name = time() . '.' . $image->extension();
+        $image->storeAs('public/images/products', $image_name);
+
+        Product::create([
+            "name" => $request["name"],
+            "description" => $request["description"],
+            "category_id" => $request["category"],
+            "isSoldOut" => false,
+            "imageUrl" => $image_name,
+        ]);
+
+        return redirect('/product')->with('toast_success', 'Product Added Successfully');
     }
 
     /**

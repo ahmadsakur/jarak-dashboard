@@ -26,23 +26,34 @@
                         <table class="table align-items-center mb-0" id="productDatatable">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Function
+                                        Description
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Technology</th>
+                                        Image</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Employed</th>
-                                    <th class="text-secondary opacity-7"></th>
+                                        Sold Out Status</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{-- Todo : Render from table --}}
                                 <tr>
+                                    <td class="text-xs font-weight-bold mb-0">1</td>
+                                    <td class="text-xs font-weight-bold mb-0">Coffee</td>
+
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">Manager</p>
+                                        <p class="text-xs text-secondary mb-0">Organization</p>
+                                    </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
@@ -55,21 +66,16 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                        <p class="text-xs text-secondary mb-0">Organization</p>
-                                    </td>
                                     <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm badge-success">Online</span>
+                                        <span class="badge bg-gradient-success">False</span>
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                                    </td>
-                                    <td class="align-middle">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                            data-toggle="tooltip" data-original-title="Edit user">
-                                            Edit
-                                        </a>
+                                    <td class="d-flex gap-3 justify-content-center align-items-center ">
+                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            data-bs-target="#updateProductModal" id="editProductButton"
+                                            data-edit="#">Edit</button>
+                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteProductModal" id="deleteProductButton"
+                                            data-destroy="#">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -89,33 +95,48 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form role="form" method="POST" action="{{ route('product.store') }}" id="productInsertForm">
+                    <form role="form" method="POST" action="{{ route('product.store') }}" id="productInsertForm" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    aria-describedby="slugHelp" name="name" autocomplete="off" required
-                                    placeholder="eg, coffee">
+                                <div class="mb-1">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        autocomplete="off" required </div>
+                                </div>
+                                <div class="mb-1">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" name="description" placeholder="insert product description" id="description"
+                                        style="height: 100px" required autocomplete="off"></textarea>
+                                </div>
+                                <div class="mb-1">
+                                    <label for="category">Category</label>
+                                    <select class="form-select" aria-label=".form-select-sm example" name="category">
+                                        <option selected>Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-1">
+                                    <label for="thumbnail" class="form-label">Image</label>
+                                    <input class="d-block" type="file" name="thumbnail" id="thumbnail">
+                                </div>
+
                             </div>
-                            <div class="form-floating">
-                                <textarea class="form-control" name="description" placeholder="insert product description" id="description"
-                                    style="height: 100px" required autocomplete="off"></textarea>
-                                <label for="description">Description</label>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Insert</button>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Insert</button>
-                        </div>
                     </form>
                 </div>
             </div>
         </div>
 
         {{-- Update Modal --}}
-        <div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog" aria-labelledby="updateProductModal"
-            aria-hidden="true">
+        <div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog"
+            aria-labelledby="updateProductModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
