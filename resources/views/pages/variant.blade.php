@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Category'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Variants'])
     <div class="container-fluid py-4">
         @if (isset($errors) && $errors->any())
             <div class="alert border border-white alert-dismissible fade show text-white" role="alert">
@@ -17,52 +17,61 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h5>Category Table</h5>
+                        <h5>Variant Table</h5>
                         <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                            data-bs-target="#insertCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> Insert</a>
+                            data-bs-target="#insertVariantModal"><i class="fa fa-plus" aria-hidden="true"></i> Insert</a>
                     </div>
                     <div class="p-4">
-                        <table class="table align-items-center mb-0" id="categoryDatatable">
+                        <table class="table align-items-center mb-0" id="variantDatatable">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">No</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Name</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Slug</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark w-50">Description</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark w-25">Action</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Function
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Technology</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Employed</th>
+                                    <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{-- Todo : Render from table --}}
-                                @forelse ($categories as $key => $category)
-                                    <tr>
-                                        <td>
-                                            {{ $key + 1 }}
-                                        </td>
-                                        <td>
-                                            <p class="text-sm mb-0">{{ $category->name }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm mb-0">{{ $category->slug }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm mb-0 text-wrap">{{ $category->description }}</p>
-                                        </td>
-                                        <td class="d-flex gap-3 justify-content-start align-items-center ">
-                                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
-                                                data-bs-target="#updateCategoryModal" id="editCategoryButton"
-                                                data-edit="{{ $category->id }}">Edit</button>
-                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#deleteCategoryModal" id="deleteCategoryButton"
-                                                data-destroy="{{ $category->id }}">Delete</button>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <div></div>
-                                @endforelse
-
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            <div>
+                                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg"
+                                                    class="avatar avatar-sm me-3">
+                                            </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-xs">John Michael</h6>
+                                                <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">Manager</p>
+                                        <p class="text-xs text-secondary mb-0">Organization</p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <span class="badge badge-sm badge-success">Online</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                            data-toggle="tooltip" data-original-title="Edit user">
+                                            Edit
+                                        </a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -70,17 +79,17 @@
             </div>
         </div>
         {{-- Insert Modal --}}
-        <div class="modal fade" id="insertCategoryModal" tabindex="-1" role="dialog" aria-labelledby="insertCategoryModal"
+        <div class="modal fade" id="insertVariantModal" tabindex="-1" role="dialog" aria-labelledby="insertVariantModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Variant</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form role="form" method="POST" action="{{ route('category.store') }}" id="categoryInsertForm">
+                    <form role="form" method="POST" action="{{ route('variant.store') }}" id="variantInsertForm">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
@@ -90,7 +99,7 @@
                                     placeholder="eg, coffee">
                             </div>
                             <div class="form-floating">
-                                <textarea class="form-control" name="description" placeholder="insert category description" id="description"
+                                <textarea class="form-control" name="description" placeholder="insert variant description" id="description"
                                     style="height: 100px" required autocomplete="off"></textarea>
                                 <label for="description">Description</label>
                             </div>
@@ -105,17 +114,17 @@
         </div>
 
         {{-- Update Modal --}}
-        <div class="modal fade" id="updateCategoryModal" tabindex="-1" role="dialog" aria-labelledby="updateCategoryModal"
+        <div class="modal fade" id="updateVariantModal" tabindex="-1" role="dialog" aria-labelledby="updateVariantModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update Category</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Update Variant</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form role="form" action="{{ route('category.update', 'update') }}" method="POST">
+                    <form role="form" action="{{ route('variant.update', 'update') }}" method="POST">
                         @method('PATCH')
                         @csrf
                         <div class="modal-body">
@@ -134,7 +143,7 @@
                                 <span class="text-xxs text-info">slug will be automatically generated</span>
                             </div>
                             <div class="form-floating">
-                                <textarea class="form-control" name="description" placeholder="insert category description" id="edit-description"
+                                <textarea class="form-control" name="description" placeholder="insert variant description" id="edit-description"
                                     style="height: 100px" required autocomplete="off"></textarea>
                                 <label for="description">Description</label>
                             </div>
@@ -150,8 +159,8 @@
         </div>
 
         {{-- Delete Modal --}}
-        <div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog"
-            aria-labelledby="deleteCategoryModal" aria-hidden="true">
+        <div class="modal fade" id="deleteVariantModal" tabindex="-1" role="dialog"
+            aria-labelledby="deleteVariantModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -160,7 +169,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form role="form" action="{{ route('category.destroy', 'category') }}" method="POST">
+                    <form role="form" action="{{ route('variant.destroy', 'variant') }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <div class="modal-body">
@@ -179,12 +188,12 @@
 @endsection
 @push('js')
     <script>
-        // Edit category modal
-        $(document).on('click', 'button#editCategoryButton', function() {
+        // Edit variant modal
+        $(document).on('click', 'button#editVariantButton', function() {
             let id = $(this).data('edit');
             $.ajax({
                 type: "get",
-                url: 'category/' + id,
+                url: 'variant/' + id,
                 dataType: 'json',
                 success: function(res) {
                     console.log(res);
@@ -201,8 +210,8 @@
         });
 
 
-        // Delete category modal
-        $(document).on('click', 'button#deleteCategoryButton', function() {
+        // Delete variant modal
+        $(document).on('click', 'button#deleteVariantButton', function() {
             let deleteID = $(this).data('destroy');
             $('#delete-id').val(deleteID);
         });

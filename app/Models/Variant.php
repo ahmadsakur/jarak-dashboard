@@ -6,33 +6,33 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Category extends Model
+class Variant extends Model
 {
     use HasFactory, HasUuids;
 
-     /**
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'product_variants';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
-        'slug',
-        'description',
+        'product_name',
+        'price',
+        'product_id'
     ];
 
     /**
-     * Get the products for the categories.
+     * Get the product that owns the variants.
      */
-    public function products()
+    public function product()
     {
-        return $this->hasMany(Product::class);
-    }
-
-    public static function getCategory($id)
-    {
-        $category = Category::where('id', $id)->get();
-        return $category;
+        return $this->belongsTo(Product::class);
     }
 }
