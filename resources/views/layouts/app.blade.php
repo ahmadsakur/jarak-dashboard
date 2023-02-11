@@ -71,14 +71,6 @@
         $(document).ready(function() {
             $('#categoryDatatable').DataTable();
             $('#productDatatable').DataTable();
-
-            new Dropzone("#product-dropzone", {
-                thumbnailHeight: 120,
-                thumbnailWidth: 120,
-                maxFilesize: 3,
-                filesizeBase: 1000,
-            })
-
         });
     </script>
     <!-- Github buttons -->

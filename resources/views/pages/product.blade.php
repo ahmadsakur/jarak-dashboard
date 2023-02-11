@@ -45,48 +45,169 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- Todo : Render from table --}}
-                                <tr>
-                                    <td class="text-xs font-weight-bold mb-0">1</td>
-                                    <td class="text-xs font-weight-bold mb-0">Coffee</td>
+                                @forelse ($products as $key => $product)
+                                    <tr>
+                                        <td class="text-xs font-weight-bold mb-0">{{ $key + 1 }}</td>
+                                        <td class="text-xs font-weight-bold mb-0">{{ $product->name }}</td>
 
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                        <p class="text-xs text-secondary mb-0">Organization</p>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div>
-                                                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg"
-                                                    class="avatar avatar-sm me-3">
-                                            </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-xs">John Michael</h6>
-                                                <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="badge bg-gradient-success">False</span>
-                                    </td>
-                                    <td class="d-flex gap-3 justify-content-center align-items-center ">
-                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
-                                            data-bs-target="#updateProductModal" id="editProductButton"
-                                            data-edit="#">Edit</button>
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteProductModal" id="deleteProductButton"
-                                            data-destroy="#">Delete</button>
-                                    </td>
-                                </tr>
+                                        <td class="text-xs mb-0 text-wrap">
+                                            {{ $product->description }}
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <button type="button" class="btn btn-sm text-xs font-weight-bold mb-0"
+                                                data-id={{ $product->id }} id="showThumbnailButton">
+                                                View Image
+                                            </button>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            @if($product->isSoldOut == 1)
+                                                <span class="badge bg-gradient-secondary">Sold</span>
+                                            @else
+                                                <span class="badge bg-gradient-success">Available</span>
+                                            @endif
+                                        </td>
+                                        <td class="d-flex gap-3 justify-content-center align-items-center ">
+                                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                                data-bs-target="#updateProductModal" id="editProductButton"
+                                                data-edit="{{ $product->id }}">Edit</button>
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#deleteProductModal" id="deleteProductButton"
+                                                data-destroy="{{ $product->id }}">Delete</button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <div></div>
+                                @endforelse
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- Insert Modal --}}
-        <div class="modal fade" id="insertProductModal" tabindex="-1" role="dialog" aria-labelledby="insertProductModal"
+
+        <!-- Show Image Modal -->
+        <div class="modal fade" id="showImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="thumbnailTitle">#</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="w-100">
+                            <img id="thumbnailSource" src="#" alt="#" width="100%" height="auto" />
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- DeleteModal -->
+        <div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form role="form" action="{{ route('product.destroy', 'product') }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <div class="modal-body">
+                            <p>Deleting product will also delete product variant associated with this product</p>
+                            <input type="hidden" name="id" id="delete-id">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Continue</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update Product Modal -->
+        <div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form role="form" method="POST" action="{{ route('product.update', 'update') }}"
+                        enctype="multipart/form-data">
+                        @method('PATCH')
+                        @csrf
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="edit-id">
+                            <div class="mb-3">
+                                <div class="mb-1">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="edit-name" name="name"
+                                        autocomplete="off" required </div>
+                                </div>
+                                <div class="mb-1">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" name="description" placeholder="insert product description" id="edit-description"
+                                        style="height: 100px" required autocomplete="off"></textarea>
+                                </div>
+                                <div class="mb-1">
+                                    <label for="category">Category</label>
+                                    <select id="edit-category" class="form-select" aria-label=".form-select-sm example"
+                                        name="category">
+                                        <option selected>Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="isSold">Sold Out Status</label>
+                                    <div class="form-check form-switch mb-1">
+                                        <input type="hidden" name="isSold" value="0" />
+                                        <input class="form-check-input" type="checkbox" id="edit-isSold" name="isSold" value='1'>
+                                        <label class="form-check-label" for="isSold" id="isSoldLabel"></label>
+                                    </div>
+                                </div>
+                                <div class="mb-1">
+                                    <div class="d-flex gap-3">
+                                        <div class="w-100">
+                                            <label>Thumbnail</label>
+                                            <div class="rounded border">
+                                                <img id="thumbnail-preview" src="" alt=""
+                                                    style="width: 100%; height:auto">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="thumbnail" class="form-label">Replace Image</label>
+                                            <input class="d-block" type="file" name="thumbnail" id="thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insert Product Modal -->
+        <div class="modal fade" id="insertProductModal" tabindex="-1" role="dialog"
+            aria-labelledby="insertProductModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -95,7 +216,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form role="form" method="POST" action="{{ route('product.store') }}" id="productInsertForm" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ route('product.store') }}" id="productInsertForm"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
@@ -122,84 +244,12 @@
                                     <label for="thumbnail" class="form-label">Image</label>
                                     <input class="d-block" type="file" name="thumbnail" id="thumbnail">
                                 </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-primary"
-                                    data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Insert</button>
-                            </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        {{-- Update Modal --}}
-        <div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog"
-            aria-labelledby="updateProductModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form role="form" action="{{ route('product.update', 'update') }}" method="POST">
-                        @method('PATCH')
-                        @csrf
-                        <div class="modal-body">
-                            <input type="hidden" name="id" id="edit-id">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="edit-name" name="name"
-                                    aria-describedby="slugHelp" name="name" autocomplete="off" required
-                                    placeholder="eg, coffee">
-                            </div>
-                            <div class="mb-3">
-                                <label for="slug" class="form-label">Slug</label>
-                                <input type="text" disabled readonly class="form-control" id="edit-slug"
-                                    name="slug" aria-describedby="slugHelp" name="slug" autocomplete="off"
-                                    required placeholder="eg, coffee">
-                                <span class="text-xxs text-info">slug will be automatically generated</span>
-                            </div>
-                            <div class="form-floating">
-                                <textarea class="form-control" name="description" placeholder="insert product description" id="edit-description"
-                                    style="height: 100px" required autocomplete="off"></textarea>
-                                <label for="description">Description</label>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-primary"
                                 data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        {{-- Delete Modal --}}
-        <div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog"
-            aria-labelledby="deleteProductModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form role="form" action="{{ route('product.destroy', 'product') }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <div class="modal-body">
-                            <p>Anda Ingin Menghapus Data ?</p>
-                            <input type="hidden" name="id" id="delete-id">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-primary">Insert</button>
                         </div>
                     </form>
                 </div>
@@ -209,24 +259,58 @@
 @endsection
 @push('js')
     <script>
+        // Show Thumbnail
+        $(document).on('click', 'button#showThumbnailButton', function() {
+            let id = $(this).data('id');
+            $.ajax({
+                type: "get",
+                url: 'product/' + id,
+                dataType: 'json',
+                success: function(res) {
+                    $('#thumbnailTitle').text(res[0].name)
+                    $('#thumbnailSource').attr('src', res[0].imageUrl)
+                    $('#thumbnailSource').attr('alt', res[0].name)
+                    $('#showImageModal').modal('show')
+                }
+
+            }).done()
+
+        });
+
+
         // Edit product modal
         $(document).on('click', 'button#editProductButton', function() {
             let id = $(this).data('edit');
+            let isSoldLabel = $('#isSoldLabel');
+            let isSoldCheckbox = $('#edit-isSold');
             $.ajax({
                 type: "get",
                 url: 'product/' + id,
                 dataType: 'json',
                 success: function(res) {
                     console.log(res);
-
                     $('#edit-id').val(res[0].id);
                     $('#edit-name').val(res[0].name);
-                    $('#edit-slug').val(res[0].slug);
                     $('#edit-description').val(res[0].description);
+                    $('#edit-category option').filter(function() {
+                        return ($(this).val() == res[0].category_id);
+                    }).prop('selected', true);
+                    $('#edit-isSold').prop('checked', res[0].isSoldOut);
+                    $('#thumbnail-preview').attr('src', res[0].imageUrl)
+                    $('#thumbnail-preview').attr('alt', res[0].name)
+                    isSoldLabel.text(res[0].isSoldOut === 1 ? 'Sold' : 'Available')
 
                 }
 
             })
+
+            $(isSoldCheckbox).change(function() {
+                if ($(this).is(':checked')) {
+                    $(this).next('label').text('Sold');
+                } else {
+                    $(this).next('label').text('Available');
+                }
+            });
 
         });
 

@@ -18,6 +18,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'image',
         'imageUrl',
         'isSoldOut',
         'category_id'
@@ -38,4 +39,13 @@ class Product extends Model
     {
         return $this->hasMany(Variant::class);
     }
+
+    public static function getProduct($id)
+    {
+        $product = Product::where('id', $id)->get();
+        return $product;
+    }
+    
+
+
 }

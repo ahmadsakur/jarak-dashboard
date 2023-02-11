@@ -60,9 +60,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="5" align="center">Categories not found, lets create one!</td>
-                                    </tr>
+                                    <div></div>
                                 @endforelse
 
                             </tbody>
