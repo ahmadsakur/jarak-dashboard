@@ -71,6 +71,7 @@
         $(document).ready(function() {
             $('#categoryDatatable').DataTable();
             $('#productDatatable').DataTable();
+            $('#variantDatatable').DataTable();
         });
     </script>
     <!-- Github buttons -->

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreVariantRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreVariantRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -25,6 +26,10 @@ class StoreVariantRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required|',
+            'price' => 'required|numeric',
+            'product_id' => 'required|uuid|exists:products,id',
+
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -13,7 +14,8 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
+
     }
 
     /**

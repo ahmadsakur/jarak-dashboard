@@ -164,7 +164,7 @@
                                     <label for="category">Category</label>
                                     <select id="edit-category" class="form-select" aria-label=".form-select-sm example"
                                         name="category">
-                                        <option selected>Select Category</option>
+                                        <option selected value="">Select Category</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="mb-1">
                                     <label for="thumbnail" class="form-label">Image</label>
-                                    <input class="d-block" type="file" name="thumbnail" id="thumbnail">
+                                    <input class="d-block" type="file" name="thumbnail" id="thumbnail" required>
                                 </div>
                             </div>
                         </div>

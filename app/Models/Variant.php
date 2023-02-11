@@ -15,7 +15,6 @@ class Variant extends Model
      *
      * @var string
      */
-    protected $table = 'product_variants';
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +22,7 @@ class Variant extends Model
      * @var array
      */
     protected $fillable = [
-        'product_name',
+        'variant_name',
         'price',
         'product_id'
     ];
@@ -34,5 +33,10 @@ class Variant extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public static function getVariant($id)
+    {
+        return Variant::where('id', $id)->get();
     }
 }

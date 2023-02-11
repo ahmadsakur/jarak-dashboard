@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateVariantRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateVariantRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -24,7 +25,9 @@ class UpdateVariantRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'product_id' => 'required|uuid|exists:products,id',
+            'name' => 'required|max:255',
+            'price' => 'required|numeric',
         ];
     }
 }

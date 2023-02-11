@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Variant;
 use App\Http\Requests\StoreVariantRequest;
 use App\Http\Requests\UpdateVariantRequest;
+use App\Models\Product;
+use Illuminate\Http\Request;
 
 class VariantController extends Controller
 {
@@ -16,7 +18,9 @@ class VariantController extends Controller
     public function index()
     {
         //
-        return view('pages.variant');
+        $variants = Variant::all();
+        $products = Product::get();
+        return view('pages.variant', compact('products', 'variants'));
     }
 
     /**
@@ -38,6 +42,13 @@ class VariantController extends Controller
     public function store(StoreVariantRequest $request)
     {
         //
+        Variant::create([
+            "variant_name" => $request["name"],
+            "price" => $request["price"],
+            "product_id" => $request["product_id"],
+        ]);
+
+        return redirect('/variant')->with('toast_success', 'Variant Added Successfully');
     }
 
     /**
@@ -46,9 +57,11 @@ class VariantController extends Controller
      * @param  \App\Models\Variant  $variant
      * @return \Illuminate\Http\Response
      */
-    public function show(Variant $variant)
+    public function show($id)
     {
         //
+        $variant = Variant::getVariant($id);
+        return response()->json($variant);
     }
 
     /**
@@ -69,9 +82,16 @@ class VariantController extends Controller
      * @param  \App\Models\Variant  $variant
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVariantRequest $request, Variant $variant)
+    public function update(UpdateVariantRequest $request, $id)
     {
         //
+        Variant::where('id', $request["id"])->update([
+            "variant_name" => $request["name"],
+            "price" => $request["price"],
+            "product_id" => $request["product_id"],
+        ]);
+
+        return redirect('/variant')->with('toast_success', 'Variant Updated Successfully');
     }
 
     /**
@@ -80,8 +100,10 @@ class VariantController extends Controller
      * @param  \App\Models\Variant  $variant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Variant $variant)
+    public function destroy(Request $request, $id)
     {
         //
+        Variant::where('id', $request["id"])->delete();
+        return redirect('/variant')->with('toast_success', 'Variant Deleted Successfully');
     }
 }
