@@ -144,4 +144,18 @@ class ProductController extends Controller
         $product->delete();
         return redirect('/product')->with('toast_success', 'Product Deleted Successfully');
     }
+
+    public function tests(){
+        // get products along with its variant
+        $products = Product::with('variants')->get();
+        return response()->json($products);
+    }
+
+    public function orders(Request $request){
+        // dd($request->all());
+        // return status
+        return response()->json([
+            "status" => "success"
+        ]);
+    }
 }

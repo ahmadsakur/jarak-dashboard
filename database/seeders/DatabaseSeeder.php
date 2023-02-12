@@ -22,5 +22,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@argon.com',
             'password' => bcrypt('secret')
         ]);
+
+        //run all seeder
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+            VariantSeeder::class,
+        ]);
     }
 }
