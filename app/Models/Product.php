@@ -24,6 +24,12 @@ class Product extends Model
         'category_id'
     ];
 
+    // exclude these fields from json response
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * Get the category that owns the product.
      */

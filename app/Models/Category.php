@@ -22,6 +22,12 @@ class Category extends Model
         'description',
     ];
 
+    // exclude these fields from json response
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * Get the products for the categories.
      */

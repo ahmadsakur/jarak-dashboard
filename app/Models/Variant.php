@@ -27,6 +27,12 @@ class Variant extends Model
         'product_id'
     ];
 
+    // exclude these fields from json response
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * Get the product that owns the variants.
      */
@@ -38,5 +44,12 @@ class Variant extends Model
     public static function getVariant($id)
     {
         return Variant::where('id', $id)->get();
+    }
+
+    // get variant by id along with product
+    public static function getVariantWithProduct($id)
+    {
+        // get only one
+        return Variant::where('id', $id)->with('product')->first();
     }
 }
