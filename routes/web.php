@@ -48,4 +48,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('category', CategoryController::class);
 	Route::resource('product', ProductController::class);
 	Route::resource('variant', VariantController::class);
+	// Route::get('/products', [ProductController::class, 'tests'])->name('products');
 });

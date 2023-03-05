@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
@@ -143,5 +144,63 @@ class ProductController extends Controller
         Storage::delete('public/images/products/' . $product->image);
         $product->delete();
         return redirect('/product')->with('toast_success', 'Product Deleted Successfully');
+    }
+
+    public function tests()
+    {
+        // get all category
+        $categories = Category::all();
+        $products = Product::with('variants')->get();
+        $data = [
+            "categories" => $categories,
+            "products" => $products
+        ];
+        return response()->json($data);
+    }
+
+    public function orders(Request $request)
+    {
+
+        // get payment method
+        $method = $request->paymentMethod['code'];
+
+        // get products
+        $products = [];
+        $totalPrice = 0;
+        foreach ($request->items as $product) {
+            $item = $this->getVariantDetails($product['variant_id']);
+            $totalPrice += $item["price"] * $product['quantity'];
+            $products[] = [
+                // "sku" => $item["id"],
+                "sku" => null,
+                "name" => $item["product"]["name"] . " (" . $item["variant_name"] . ")",
+                "price" => $item["price"],
+                "quantity" => $product['quantity'],
+                "subtotal" => $item["price"] * $product['quantity'],
+                "image_url" => $item["product"]["imageUrl"],
+            ];
+
+        }
+
+
+        // get user data
+        $user = $request->orderForm;
+
+
+        // Send Request to Tripay
+        $tripay = new TripayController();
+        $res = $tripay->createPaymentRequest($method, $totalPrice, $products, $user);
+
+        // send to FE
+        return $res;
+    }
+
+    public function getVariantDetails($id){
+        $variant = Variant::getVariantWithProduct($id);
+        
+        // return response()->json($variant);
+        // get variant name
+
+        return $variant;
     }
 }
