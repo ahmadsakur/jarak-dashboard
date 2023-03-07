@@ -156,14 +156,4 @@ class ProductController extends Controller
         ];
         return response()->json($data);
     }
-
-
-    public function getVariantDetails($id){
-        $variant = Variant::getVariantWithProduct($id);
-        
-        // return response()->json($variant);
-        // get variant name
-
-        return $variant;
-    }
 }

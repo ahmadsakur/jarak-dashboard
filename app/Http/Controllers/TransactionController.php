@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\Variant;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
     //
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        dd($request->all());
+
+        return response()->json(
+            'success'
+        );
+
         // get payment method
         $method = $request->paymentMethod['code'];
 
@@ -41,7 +46,7 @@ class TransactionController extends Controller
         $tripay = new TripayController();
         $res = $tripay->createPaymentRequest($method, $totalPrice, $products, $user);
 
-        // //Create Transaction
+        //Create Transaction
         // Transaction::create([
         //     "transaction_id" => $res["data"]["payment_code"],
         //     "customer_name" => $user["name"],
@@ -52,8 +57,17 @@ class TransactionController extends Controller
         //     "payment_status" => $res["data"]["status"],
         //     "transaction_status" => "INITIAL",
         // ]);
-
         // send to FE
         return $res;
+    }
+
+    public function getVariantDetails($id)
+    {
+        $variant = Variant::getVariantWithProduct($id);
+
+        // return response()->json($variant);
+        // get variant name
+
+        return $variant;
     }
 }

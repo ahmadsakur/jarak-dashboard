@@ -22,8 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/products', [ProductController::class, 'exportProducts'])->name('products.export');
-Route::post('/create-orders', [TransactionController::class, 'store'])->name('transaction.store');
+Route::post('/create-orders', [TransactionController::class, 'create'])->name('transaction.create');
 Route::get('/merchant-channel', [TripayController::class, 'merchantChannel'])->name('merchant-channel');
 Route::get('/transaction/{invoice}', [TripayController::class, 'getOrderDetails'])->name('transaction.detail');
-// Route::get('/variant/{id}', [ProductController::class, 'getVariantDetails'])->name('variant.detail');
 
