@@ -38,19 +38,19 @@
                                 {{-- Todo : Render from table --}}
                                 @forelse ($categories as $key => $category)
                                     <tr>
-                                        <td>
+                                        <td class="align-top">
                                             {{ $key + 1 }}
                                         </td>
-                                        <td>
+                                        <td class="align-top">
                                             <p class="text-sm mb-0">{{ $category->name }}</p>
                                         </td>
-                                        <td>
+                                        <td class="align-top">
                                             <p class="text-sm mb-0">{{ $category->slug }}</p>
                                         </td>
-                                        <td>
+                                        <td class="align-top">
                                             <p class="text-sm mb-0 text-wrap">{{ $category->description }}</p>
                                         </td>
-                                        <td class="d-flex gap-3 justify-content-start align-items-center ">
+                                        <td class="d-flex gap-3 justify-content-start align-items-center align-top">
                                             <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
                                                 data-bs-target="#updateCategoryModal" id="editCategoryButton"
                                                 data-edit="{{ $category->id }}">Edit</button>

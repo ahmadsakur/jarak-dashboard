@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('table_number');
             $table->integer('total_price');
             $table->string('payment_method');
-            $table->enum('payment_status', ['UNPAID', 'PAID', 'PENDING', 'EXPIRED', 'FAILED']);
+            $table->enum('payment_status', ['UNPAID', 'PAID', 'REFUND', 'EXPIRED', 'FAILED']);
             $table->enum('transaction_status', ['INITIAL','CONFIRMED', 'PROCESSED', 'COMPLETED', 'CANCELLED']);
             $table->timestamps();
         });

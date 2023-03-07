@@ -10,6 +10,12 @@ class TransactionController extends Controller
 {
     //
 
+    public function index()
+    {
+        $transactions = Transaction::all();
+        return view('pages.transactions', compact('transactions'));
+    }
+
     public function create(Request $request)
     {
         // get payment method

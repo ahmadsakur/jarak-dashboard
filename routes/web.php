@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\VariantController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,5 +49,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('category', CategoryController::class);
 	Route::resource('product', ProductController::class);
 	Route::resource('variant', VariantController::class);
-	// Route::get('/products', [ProductController::class, 'tests'])->name('products');
+	Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
 });
