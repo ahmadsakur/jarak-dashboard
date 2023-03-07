@@ -12,13 +12,9 @@ class TransactionController extends Controller
 
     public function create(Request $request)
     {
-
-        return response()->json(
-            'success'
-        );
-
         // get payment method
-        $method = $request->paymentMethod['code'];
+        $method_code = $request->paymentMethod['code'];
+        $method_name = $request->paymentMethod['name'];
 
         // get products
         $products = [];
@@ -44,19 +40,23 @@ class TransactionController extends Controller
 
         // Send Request to Tripay
         $tripay = new TripayController();
-        $res = $tripay->createPaymentRequest($method, $totalPrice, $products, $user);
+        $res = $tripay->createPaymentRequest($method_code, $totalPrice, $products, $user);
 
-        //Create Transaction
-        // Transaction::create([
-        //     "transaction_id" => $res["data"]["payment_code"],
-        //     "customer_name" => $user["name"],
-        //     "customer_phone" => $user["whatAppNumber"],
-        //     "table_number" => $user["tableNumber"],
-        //     "total_price" => $totalPrice,
-        //     "payment_method" => $method,
-        //     "payment_status" => $res["data"]["status"],
-        //     "transaction_status" => "INITIAL",
-        // ]);
+        $returnedData = $res;
+        $data = json_decode($returnedData->getContent(), true);
+
+
+        // Create Transaction
+        Transaction::create([
+            "transaction_id" => $data["data"]["data"]["reference"],
+            "customer_name" => $user["name"],
+            "customer_phone" => $user["whatsappNumber"],
+            "table_number" => $user["tableNumber"],
+            "total_price" => $totalPrice,
+            "payment_method" => $method_name,
+            "payment_status" => "UNPAID",
+            "transaction_status" => "INITIAL",
+        ]);
         // send to FE
         return $res;
     }
@@ -64,10 +64,6 @@ class TransactionController extends Controller
     public function getVariantDetails($id)
     {
         $variant = Variant::getVariantWithProduct($id);
-
-        // return response()->json($variant);
-        // get variant name
-
         return $variant;
     }
 }
