@@ -16,6 +16,15 @@
     <link id="pagestyle" href="assets/css/argon-dashboard.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="assets/css/plugins/jquery.dataTables.css">
     <link rel="stylesheet" href="assets/css/plugins/dropzone.min.css">
+    <style>
+        table.dataTable tbody>tr>td {
+            border: none;
+        }
+
+        table.dataTable tbody td {
+            vertical-align: top;
+        }
+    </style>
 
 
 </head>
@@ -69,9 +78,16 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
         $(document).ready(function() {
-            $('#categoryDatatable').DataTable();
-            $('#productDatatable').DataTable();
+            $('#categoryDatatable').DataTable({
+                "scrollX": true
+            });
+            $('#productDatatable').DataTable({
+                "scrollX": true
+            });
             $('#variantDatatable').DataTable();
+            $('#transactionDatatable').DataTable({
+                "scrollX": true
+            });
         });
     </script>
     <!-- Github buttons -->

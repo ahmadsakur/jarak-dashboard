@@ -47,19 +47,19 @@
                             <tbody>
                                 @forelse ($products as $key => $product)
                                     <tr>
-                                        <td class="text-xs font-weight-bold mb-0">{{ $key + 1 }}</td>
-                                        <td class="text-xs font-weight-bold mb-0">{{ $product->name }}</td>
+                                        <td class="text-xs font-weight-bold mb-0 align-top">{{ $key + 1 }}</td>
+                                        <td class="text-xs font-weight-bold mb-0 align-top">{{ $product->name }}</td>
 
                                         <td class="text-xs mb-0 text-wrap">
                                             {{ $product->description }}
                                         </td>
-                                        <td class="align-middle text-center text-sm">
+                                        <td class="align-top text-center text-sm">
                                             <button type="button" class="btn btn-sm text-xs font-weight-bold mb-0"
                                                 data-id={{ $product->id }} id="showThumbnailButton">
                                                 View Image
                                             </button>
                                         </td>
-                                        <td class="align-middle text-center text-sm">
+                                        <td class="align-top text-center text-sm">
                                             @if($product->isSoldOut == 1)
                                                 <span class="badge bg-gradient-secondary">Sold</span>
                                             @else

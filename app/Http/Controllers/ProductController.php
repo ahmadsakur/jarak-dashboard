@@ -10,7 +10,6 @@ use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
-use PhpParser\Node\Stmt\TryCatch;
 
 class ProductController extends Controller
 {
@@ -146,7 +145,7 @@ class ProductController extends Controller
         return redirect('/product')->with('toast_success', 'Product Deleted Successfully');
     }
 
-    public function tests()
+    public function exportProducts()
     {
         // get all category
         $categories = Category::all();
@@ -156,51 +155,5 @@ class ProductController extends Controller
             "products" => $products
         ];
         return response()->json($data);
-    }
-
-    public function orders(Request $request)
-    {
-
-        // get payment method
-        $method = $request->paymentMethod['code'];
-
-        // get products
-        $products = [];
-        $totalPrice = 0;
-        foreach ($request->items as $product) {
-            $item = $this->getVariantDetails($product['variant_id']);
-            $totalPrice += $item["price"] * $product['quantity'];
-            $products[] = [
-                // "sku" => $item["id"],
-                "sku" => null,
-                "name" => $item["product"]["name"] . " (" . $item["variant_name"] . ")",
-                "price" => $item["price"],
-                "quantity" => $product['quantity'],
-                "subtotal" => $item["price"] * $product['quantity'],
-                "image_url" => $item["product"]["imageUrl"],
-            ];
-
-        }
-
-
-        // get user data
-        $user = $request->orderForm;
-
-
-        // Send Request to Tripay
-        $tripay = new TripayController();
-        $res = $tripay->createPaymentRequest($method, $totalPrice, $products, $user);
-
-        // send to FE
-        return $res;
-    }
-
-    public function getVariantDetails($id){
-        $variant = Variant::getVariantWithProduct($id);
-        
-        // return response()->json($variant);
-        // get variant name
-
-        return $variant;
     }
 }

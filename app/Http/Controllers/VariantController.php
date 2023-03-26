@@ -17,11 +17,13 @@ class VariantController extends Controller
      */
     public function index()
     {
-        //
+        //get variant with product
         $variants = Variant::all();
         $products = Product::get();
         return view('pages.variant', compact('products', 'variants'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
