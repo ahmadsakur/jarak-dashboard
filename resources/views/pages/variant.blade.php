@@ -26,25 +26,22 @@
                         <table class="table align-items-center mb-0" id="variantDatatable">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-8">No
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No
                                     </th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-8">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Product Name</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-8">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Variant Name</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-8">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                                         Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($variants as $variant)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td class="text-center">{{ $variant->product->name }}</td>
-                                        <td class="text-center">{{ $variant->variant_name }}</td>
+                                        <td class="text-xs font-weight-bold mb-0 align-middle">{{ $loop->iteration }}</td>
+                                        <td class="text-xs font-weight-bold mb-0 align-middle">{{ $variant->product->name }}</td>
+                                        <td class="text-xs font-weight-bold mb-0 align-middle">{{ $variant->variant_name }}</td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
                                                 data-bs-target="#updateVariantModal" id="editVariantButton"

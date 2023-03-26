@@ -27,28 +27,29 @@
                         <table class="table align-items-center mb-0" id="categoryDatatable">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">No</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Name</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Slug</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark w-50">Description</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark w-25">Action</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Description
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Action
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{-- Todo : Render from table --}}
                                 @forelse ($categories as $key => $category)
                                     <tr>
-                                        <td class="align-top">
+                                        <td class="text-xs font-weight-bold mb-0 align-top">
                                             {{ $key + 1 }}
                                         </td>
                                         <td class="align-top">
-                                            <p class="text-sm mb-0">{{ $category->name }}</p>
+                                            <p class="text-xs font-weight-bold mb-0 align-top">{{ $category->name }}</p>
                                         </td>
                                         <td class="align-top">
-                                            <p class="text-sm mb-0">{{ $category->slug }}</p>
-                                        </td>
-                                        <td class="align-top">
-                                            <p class="text-sm mb-0 text-wrap">{{ $category->description }}</p>
+                                            <p class="text-xs mb-0 text-wrap">{{ $category->description }}</p>
                                         </td>
                                         <td class="d-flex gap-3 justify-content-start align-items-center align-top">
                                             <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
@@ -126,13 +127,6 @@
                                     aria-describedby="slugHelp" name="name" autocomplete="off" required
                                     placeholder="eg, coffee">
                             </div>
-                            <div class="mb-3">
-                                <label for="slug" class="form-label">Slug</label>
-                                <input type="text" disabled readonly class="form-control" id="edit-slug"
-                                    name="slug" aria-describedby="slugHelp" name="slug" autocomplete="off"
-                                    required placeholder="eg, coffee">
-                                <span class="text-xxs text-info">slug will be automatically generated</span>
-                            </div>
                             <div class="form-floating">
                                 <textarea class="form-control" name="description" placeholder="insert category description" id="edit-description"
                                     style="height: 100px" required autocomplete="off"></textarea>
@@ -187,19 +181,12 @@
                 url: 'category/' + id,
                 dataType: 'json',
                 success: function(res) {
-                    console.log(res);
-
                     $('#edit-id').val(res[0].id);
                     $('#edit-name').val(res[0].name);
-                    $('#edit-slug').val(res[0].slug);
                     $('#edit-description').val(res[0].description);
-
                 }
-
             })
-
         });
-
 
         // Delete category modal
         $(document).on('click', 'button#deleteCategoryButton', function() {
