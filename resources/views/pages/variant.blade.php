@@ -32,6 +32,8 @@
                                         Product Name</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Variant Name</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Price</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                                         Actions</th>
                                 </tr>
@@ -42,6 +44,7 @@
                                         <td class="text-xs font-weight-bold mb-0 align-middle">{{ $loop->iteration }}</td>
                                         <td class="text-xs font-weight-bold mb-0 align-middle">{{ $variant->product->name }}</td>
                                         <td class="text-xs font-weight-bold mb-0 align-middle">{{ $variant->variant_name }}</td>
+                                        <td class="text-xs font-weight-bold mb-0 align-middle">{{ $variant->price }}</td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
                                                 data-bs-target="#updateVariantModal" id="editVariantButton"

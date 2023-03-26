@@ -19,7 +19,6 @@ class CategoryFactory extends Factory
         return [
             //create category factory
             'name' => $this->faker->name,
-            'slug' => $this->faker->slug,
             'description' => $this->faker->text,
         ];
     }
