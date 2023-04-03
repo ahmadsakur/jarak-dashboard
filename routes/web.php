@@ -50,5 +50,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('product', ProductController::class);
 	Route::resource('variant', VariantController::class);
 	Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
+	Route::patch('/transactions/{id}', [TransactionController::class, 'updateOrderStatus'])->name('transaction.update');
 	Route::get('/transactions/{id}', [TransactionController::class, 'getOrderItems'])->name('transaction.detail');
 });

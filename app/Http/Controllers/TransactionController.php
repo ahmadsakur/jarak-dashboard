@@ -51,7 +51,7 @@ class TransactionController extends Controller
             'paymentMethod.icon_url' => 'nullable|string|url',
             'paymentMethod.active' => 'required|boolean',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'The given data was invalid.',
@@ -107,12 +107,13 @@ class TransactionController extends Controller
             "payment_status" => "UNPAID",
             "transaction_status" => "INITIAL",
         ]);
-        
+
         // send to FE
         return $res;
     }
 
-    public function getOrderItems($id){
+    public function getOrderItems($id)
+    {
         // get order items from Tripay
         $tripayController = new TripayController();
         $res = $tripayController->getOrderDetails($id);
@@ -121,11 +122,13 @@ class TransactionController extends Controller
         // get order status from DB
         $transaction = Transaction::where('transaction_id', $id)->first();
         $status = $transaction->transaction_status;
+        $notes = $transaction->notes;
 
         // append order status as a siblings of order items
         $response = [
+            "items" => $items,
             "status" => $status,
-            "items" => $items
+            "notes" => $notes
         ];
 
         return $response;
@@ -135,9 +138,9 @@ class TransactionController extends Controller
     {
         // get Transaction status field as json, return status 200 if success, and 500 if failed
         $transaction = Transaction::where('transaction_id', $invoice)->first();
-       
+
         // return a json response based on if the transaction is found or not
-        if($transaction == null)
+        if ($transaction == null)
             return response()->json([
                 'status' => 500,
                 'message' => 'Transaction not found',
@@ -149,6 +152,24 @@ class TransactionController extends Controller
             'message' => 'success',
             'data'   => $transaction->transaction_status
         ]);
+    }
+
+    public function updateOrderStatus(Request $request, $id)
+    {
+        // validate data
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:INITIAL,CONFIRMED,PROCESSED,COMPLETED,CANCELLED',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/transactions')->with('toast_error', 'Invalid Data');
+        }
+
+        // update transaction status
+        Transaction::where('transaction_id', $request["transaction_id"])->update([
+            "transaction_status" => $request["status"],
+        ]);
+        return redirect('/transactions')->with('toast_success', 'Category Updated Successfully');
     }
 
     public function getVariantDetails($id)

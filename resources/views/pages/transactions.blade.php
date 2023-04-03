@@ -149,7 +149,9 @@
             <div class="modal fade" id="transactionDetailModal" tabindex="-1" role="dialog"
                 aria-labelledby="transactionDetailModal" aria-hidden="true" style="min-width: 600px">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                    <form>
+                    <form role="form" action="{{ route('transaction.update', 'update') }}" method="POST">
+                        @method('PATCH')
+                        @csrf
                         <div class="modal-content">
                             <div class="modal-header d-flex align-items-center">
                                 <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Detail</h5>
@@ -166,7 +168,7 @@
                                 </div>
                             </div>
                             <div class="modal-body">
-                                <table class="table align-items-start mb-0">
+                                <table class="table table-bordered align-items-start mb-0">
                                     <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -182,6 +184,14 @@
                                     <tbody id="transactionDetailTable">
                                     </tbody>
                                 </table>
+                                {{-- notes --}}
+                                <div id="notesContainer" class="mt-4 mb-2 ml-2">
+                                    <p class="text-xxs font-weight-bold mb-1">
+                                        Notes
+                                    </p>
+                                    <p class="text-sm opacity-9" id="notes-content"></p>
+                                </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
@@ -230,6 +240,7 @@
                     success: function(data) {
                         let tbody = $('#transactionDetailTable');
                         tbody.empty(); // Clear existing data
+                        let notes = $('#notes-content');
                         $('#dropdown-status').show();
 
 
@@ -255,14 +266,23 @@
                             return ($(this).val() == data.status);
                         }).prop('selected', true);
 
+                        // Set notes
+                        if (data.notes) {
+                            notes.text(data.notes);
+                        } else {
+                            notes.text('No notes');
+                        }
+
                     },
                     error: function(error) {
                         let tbody = $('#transactionDetailTable');
                         let dropdown = $('#dropdown-status');
-
-
+                        let notes = $('#notesContainer');
+                        
+                        
                         dropdown.empty();
                         tbody.empty(); // Clear existing data
+                        notes.hide();
                         tbody.append(
                             `<tr>
                                 <td colspan="4" class="text-center">
