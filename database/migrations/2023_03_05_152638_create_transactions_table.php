@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_phone');
             $table->integer('table_number');
+            $table->string('notes')->nullable();
             $table->integer('total_price');
             $table->string('payment_method');
             $table->enum('payment_status', ['UNPAID', 'PAID', 'REFUND', 'EXPIRED', 'FAILED']);
