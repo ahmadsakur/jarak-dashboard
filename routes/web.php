@@ -50,4 +50,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('product', ProductController::class);
 	Route::resource('variant', VariantController::class);
 	Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
+	Route::get('/transactions/{id}', [TransactionController::class, 'getOrderItems'])->name('transaction.detail');
 });

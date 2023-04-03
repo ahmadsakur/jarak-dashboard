@@ -123,24 +123,4 @@ class TripayController extends Controller
 
         return (json_decode($response));
     }
-
-    public function getOrderStatus($invoice)
-    {
-        // get Transaction status field as json, return status 200 if success, and 500 if failed
-        $transaction = Transaction::where('transaction_id', $invoice)->first();
-       
-        // return a json response based on if the transaction is found or not
-        if($transaction == null)
-            return response()->json([
-                'status' => 500,
-                'message' => 'Transaction not found',
-                'data'   => null
-            ]);
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'success',
-            'data'   => $transaction->transaction_status
-        ]);
-    }
 }

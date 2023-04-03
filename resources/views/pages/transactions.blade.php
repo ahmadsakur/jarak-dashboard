@@ -133,7 +133,7 @@
                                         <td class="text-xs font-weight-bold mb-0 align-top">
                                             <button class="btn sm btn-outline-info text-xs" data-bs-toggle="modal"
                                                 data-bs-target="#transactionDetailModal" id="transactionModalButton"
-                                                data-edit="{{ $transaction->id }}">Details</button>
+                                                data-detail="{{ $transaction->transaction_id }}">Details</button>
                                         </td>
                                     </tr>
                                     @empty
@@ -145,25 +145,141 @@
                     </div>
                 </div>
             </div>
-        </div>
-        {{-- Modal --}}
-        <div class="modal fade" id="transactionDetailModal" tabindex="-1" role="dialog"
-            aria-labelledby="transactionDetailModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Detail</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Should this be a modal ?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
+            {{-- Modal --}}
+            <div class="modal fade" id="transactionDetailModal" tabindex="-1" role="dialog"
+                aria-labelledby="transactionDetailModal" aria-hidden="true" style="min-width: 600px">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <form>
+                        <div class="modal-content">
+                            <div class="modal-header d-flex align-items-center">
+                                <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Detail</h5>
+                                <div class="dropdown text-sm" id="dropdown-status">
+                                    <input type="hidden" name="transaction_id" id="transactionIdInput">
+                                    <select class="form-select" name="status" id="transactionStatusSelect"
+                                        aria-label="Default select example">
+                                        <option value="INITIAL">Menunggu Pembayaran</option>
+                                        <option value="CONFIRMED">Dibayar</option>
+                                        <option value="PROCESSED">Dalam Proses</option>
+                                        <option value="COMPLETED">Selesai</option>
+                                        <option value="CANCELLED">Dibatalkan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table align-items-start mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Product Name</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Quantity</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Price</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Total Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transactionDetailTable">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                            </div>
+                    </form>
+
                 </div>
             </div>
-        @endsection
+        </div>
+        </div>
+    @endsection
+    @push('js')
+        <script>
+            // Show Product Detail
+            function formatCurrencyToIDR(amount) {
+                let formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                });
+                return formatter.format(amount);
+            }
+            $(document).on('click', 'button#transactionModalButton', function() {
+                let id = $(this).data('detail');
+                let url = "{{ route('transaction.detail', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    beforeSend: function() {
+                        // Show loading animation
+                        $('#transactionDetailTable').html(
+                            `<tr>
+                                <td colspan="4" class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>`
+                        );
+
+                        // set transaction status dropdown to hidden
+                        $('#dropdown-status').hide();
+                    },
+                    success: function(data) {
+                        let tbody = $('#transactionDetailTable');
+                        tbody.empty(); // Clear existing data
+                        $('#dropdown-status').show();
+
+
+                        $.each(data.items, function(index, item) {
+                            let row = $('<tr class="align-items-center">');
+                            row.append($('<td class="text-xs font-weight-bold mb-0 align-top">')
+                                .text(item.name));
+                            row.append($(
+                                '<td class="text-xs font-weight-bold mb-0 align-top text-center">'
+                            ).text(item.quantity));
+                            row.append($(
+                                '<td class="text-xs font-weight-bold mb-0 align-top text-center">'
+                            ).text(formatCurrencyToIDR(item.price)));
+                            row.append($(
+                                '<td class="text-xs font-weight-bold mb-0 align-top text-center">'
+                            ).text(formatCurrencyToIDR(item.subtotal)));
+                            tbody.append(row);
+                        });
+
+                        // Set transaction data
+                        $('#transactionIdInput').val(id);
+                        $('#transactionStatusSelect option').filter(function() {
+                            return ($(this).val() == data.status);
+                        }).prop('selected', true);
+
+                    },
+                    error: function(error) {
+                        let tbody = $('#transactionDetailTable');
+                        let dropdown = $('#dropdown-status');
+
+
+                        dropdown.empty();
+                        tbody.empty(); // Clear existing data
+                        tbody.append(
+                            `<tr>
+                                <td colspan="4" class="text-center">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Oops!</strong> Something went wrong.
+                                    </div>
+                                    <p class="text-xxs font-weight-bold">
+                                        Check the data on the TriPay server
+                                        </p>
+                                    <button class="btn btn-outline-primary" data-bs-dismiss="modal">
+                                        <a href="https://tripay.co.id/simulator/transaction/${id}" target="_blank">
+                                        Order Details</button>
+                                </td>
+                            </tr>`
+                        );
+                    }
+                });
+            });
+        </script>
+    @endpush

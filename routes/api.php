@@ -25,4 +25,4 @@ Route::get('/products', [ProductController::class, 'exportProducts'])->name('pro
 Route::post('/create-orders', [TransactionController::class, 'create'])->name('transaction.create');
 Route::get('/merchant-channel', [TripayController::class, 'merchantChannel'])->name('merchant-channel');
 Route::get('/transaction/{invoice}', [TripayController::class, 'getOrderDetails'])->name('transaction.detail');
-Route::get('/transaction/{invoice}/status', [TripayController::class, 'getOrderStatus'])->name('transaction.status');
+Route::get('/transaction/{invoice}/status', [TransactionController::class, 'getOrderStatus'])->name('transaction.status');
