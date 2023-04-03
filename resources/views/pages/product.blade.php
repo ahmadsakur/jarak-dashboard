@@ -288,7 +288,6 @@
                 url: 'product/' + id,
                 dataType: 'json',
                 success: function(res) {
-                    console.log(res);
                     $('#edit-id').val(res[0].id);
                     $('#edit-name').val(res[0].name);
                     $('#edit-description').val(res[0].description);

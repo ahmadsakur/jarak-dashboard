@@ -25,43 +25,57 @@
                             Link</a>
                     </div>
                     <div class="p-4">
-                        <table class="table align-items-center mb-0" id="transactionDatatable">
+                        <table class="table align-items-center mb-0" id="transactionDatatable" style="width: 100%">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Transaction ID</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Name</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Phone</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Table Number</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Amount</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Payment Method</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Payment Status</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Transaction Status</th>
-                                    <th class="text-uppercase text-xs font-weight-bolder text-dark">Action</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Transaction ID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Table
+                                        Number</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Payment
+                                        Method</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Payment
+                                        Status</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Transaction Status</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{-- Todo : Render from table --}}
                                 @forelse ($transactions as $key => $transaction)
-                                    <tr>
-                                        <td class="text-sm font-weight-bold align-top">
+                                    <tr class="align-items-start">
+                                        <td class="text-xs font-weight-bold mb-0 align-top">
                                             {{ $transaction->transaction_id }}
                                         </td>
-                                        <td class=" mb-0 align-top">
-                                            <p class="text-sm text-dark">{{ $transaction->customer_name }}</p>
+                                        <td class="mb-0 align-top">
+                                            <p class="text-xs font-weight-bold mb-0 align-top">
+                                                {{ $transaction->customer_name }}</p>
                                         </td>
                                         <td class=" mb-0 align-top">
-                                            <p class="text-sm text-dark">{{ $transaction->customer_phone }}</p>
+                                            <p class="text-xs font-weight-bold mb-0 align-top">
+                                                {{ $transaction->customer_phone }}</p>
                                         </td>
                                         <td class=" mb-0 align-top">
-                                            <p class="text-sm text-dark text-center">{{ $transaction->table_number }}</p>
+                                            <p class="text-xs font-weight-bold mb-0 align-top text-center">
+                                                {{ $transaction->table_number }}</p>
                                         </td>
                                         <td class=" mb-0 align-top">
-                                            <p class="text-sm text-dark">{{ formatCurrency($transaction->total_price) }}</p>
+                                            <p class="text-xs font-weight-bold mb-0 align-top">
+                                                {{ formatCurrency($transaction->total_price) }}</p>
                                         </td>
                                         <td class=" mb-0 align-top">
-                                            <p class="text-sm text-dark">{{ $transaction->payment_method }}</p>
+                                            <p class="text-xs font-weight-bold mb-0 align-top">
+                                                {{ $transaction->payment_method }}</p>
                                         </td>
-                                        <td class=" mb-0 align-top text-center">
+                                        <td class="text-xs font-weight-bold mb-0 align-top">
                                             @switch($transaction->payment_status)
                                                 @case('UNPAID')
                                                     <span class="badge badge-sm bg-secondary">UNPAID</span>
@@ -88,7 +102,7 @@
                                             @endswitch
 
                                         </td>
-                                        <td class=" mb-0 align-top">
+                                        <td class="text-xs font-weight-bold mb-0 align-top">
                                             @switch($transaction->transaction_status)
                                                 @case('INITIAL')
                                                     <span class="badge badge-sm bg-secondary">Menunggu Pembayaran</span>
@@ -116,21 +130,176 @@
                                         </td>
 
 
-                                        <td class="d-flex gap-3 justify-content-start align-items-center ">
-                                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
-                                                data-bs-target="#updateCategoryModal" id="editCategoryButton"
-                                                data-edit="{{ $transaction->id }}">Edit</button>
+                                        <td class="text-xs font-weight-bold mb-0 align-top">
+                                            <button class="btn sm btn-outline-info text-xs" data-bs-toggle="modal"
+                                                data-bs-target="#transactionDetailModal" id="transactionModalButton"
+                                                data-detail="{{ $transaction->transaction_id }}">Details</button>
                                         </td>
                                     </tr>
                                     @empty
                                         <div></div>
                                     @endforelse
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            {{-- Modal --}}
+            <div class="modal fade" id="transactionDetailModal" tabindex="-1" role="dialog"
+                aria-labelledby="transactionDetailModal" aria-hidden="true" style="min-width: 600px">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <form role="form" action="{{ route('transaction.update', 'update') }}" method="POST">
+                        @method('PATCH')
+                        @csrf
+                        <div class="modal-content">
+                            <div class="modal-header d-flex align-items-center">
+                                <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Detail</h5>
+                                <div class="dropdown text-sm" id="dropdown-status">
+                                    <input type="hidden" name="transaction_id" id="transactionIdInput">
+                                    <select class="form-select" name="status" id="transactionStatusSelect"
+                                        aria-label="Default select example">
+                                        <option value="INITIAL">Menunggu Pembayaran</option>
+                                        <option value="CONFIRMED">Dibayar</option>
+                                        <option value="PROCESSED">Dalam Proses</option>
+                                        <option value="COMPLETED">Selesai</option>
+                                        <option value="CANCELLED">Dibatalkan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered align-items-start mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Product Name</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Quantity</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Price</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Total Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transactionDetailTable">
+                                    </tbody>
+                                </table>
+                                {{-- notes --}}
+                                <div id="notesContainer" class="mt-4 mb-2 ml-2">
+                                    <p class="text-xxs font-weight-bold mb-1">
+                                        Notes
+                                    </p>
+                                    <p class="text-sm opacity-9" id="notes-content"></p>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                            </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
         </div>
     @endsection
+    @push('js')
+        <script>
+            // Show Product Detail
+            function formatCurrencyToIDR(amount) {
+                let formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                });
+                return formatter.format(amount);
+            }
+            $(document).on('click', 'button#transactionModalButton', function() {
+                let id = $(this).data('detail');
+                let url = "{{ route('transaction.detail', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    beforeSend: function() {
+                        // Show loading animation
+                        $('#transactionDetailTable').html(
+                            `<tr>
+                                <td colspan="4" class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>`
+                        );
+
+                        // set transaction status dropdown to hidden
+                        $('#dropdown-status').hide();
+                    },
+                    success: function(data) {
+                        let tbody = $('#transactionDetailTable');
+                        tbody.empty(); // Clear existing data
+                        let notes = $('#notes-content');
+                        $('#dropdown-status').show();
+
+
+                        $.each(data.items, function(index, item) {
+                            let row = $('<tr class="align-items-center">');
+                            row.append($('<td class="text-xs font-weight-bold mb-0 align-top">')
+                                .text(item.name));
+                            row.append($(
+                                '<td class="text-xs font-weight-bold mb-0 align-top text-center">'
+                            ).text(item.quantity));
+                            row.append($(
+                                '<td class="text-xs font-weight-bold mb-0 align-top text-center">'
+                            ).text(formatCurrencyToIDR(item.price)));
+                            row.append($(
+                                '<td class="text-xs font-weight-bold mb-0 align-top text-center">'
+                            ).text(formatCurrencyToIDR(item.subtotal)));
+                            tbody.append(row);
+                        });
+
+                        // Set transaction data
+                        $('#transactionIdInput').val(id);
+                        $('#transactionStatusSelect option').filter(function() {
+                            return ($(this).val() == data.status);
+                        }).prop('selected', true);
+
+                        // Set notes
+                        if (data.notes) {
+                            notes.text(data.notes);
+                        } else {
+                            notes.text('No notes');
+                        }
+
+                    },
+                    error: function(error) {
+                        let tbody = $('#transactionDetailTable');
+                        let dropdown = $('#dropdown-status');
+                        let notes = $('#notesContainer');
+                        
+                        
+                        dropdown.empty();
+                        tbody.empty(); // Clear existing data
+                        notes.hide();
+                        tbody.append(
+                            `<tr>
+                                <td colspan="4" class="text-center">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Oops!</strong> Something went wrong.
+                                    </div>
+                                    <p class="text-xxs font-weight-bold">
+                                        Check the data on the TriPay server
+                                        </p>
+                                    <button class="btn btn-outline-primary" data-bs-dismiss="modal">
+                                        <a href="https://tripay.co.id/simulator/transaction/${id}" target="_blank">
+                                        Order Details</button>
+                                </td>
+                            </tr>`
+                        );
+                    }
+                });
+            });
+        </script>
+    @endpush

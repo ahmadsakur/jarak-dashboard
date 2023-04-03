@@ -14,6 +14,7 @@ class Transaction extends Model
         'transaction_id',
         'customer_name',
         'customer_phone',
+        'notes',
         'table_number',
         'total_price',
         'payment_method',

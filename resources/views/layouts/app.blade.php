@@ -86,7 +86,8 @@
             });
             $('#variantDatatable').DataTable();
             $('#transactionDatatable').DataTable({
-                "scrollX": true
+                "scrollX": true,
+
             });
         });
     </script>

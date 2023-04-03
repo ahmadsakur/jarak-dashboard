@@ -48,7 +48,6 @@ class CategoryController extends Controller
 
         Category::create([
             "name" => $request["name"],
-            'slug' => Str::slug($request["name"], '-'),
             "description" => $request["description"],
         ]);
 
@@ -90,7 +89,6 @@ class CategoryController extends Controller
         //
         Category::where('id', $request['id'])->update([
             "name" => $request["name"],
-            'slug' => Str::slug($request["name"], '-'),
             "description" => $request["description"],
         ]);
 
