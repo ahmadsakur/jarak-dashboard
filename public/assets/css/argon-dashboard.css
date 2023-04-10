@@ -6160,8 +6160,7 @@ textarea.form-control-lg {
   float: left;
   width: 100%;
   margin-right: -100%;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   transition: transform 0.6s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -17270,7 +17269,6 @@ textarea.form-control-lg {
     top: 0;
     pointer-events: none;
     animation: hide-navbar-dropdown 0.25s ease forwards;
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: animation, box-shadow;
   }
@@ -17323,7 +17321,6 @@ textarea.form-control-lg {
     pointer-events: none;
     transform: perspective(999px) rotateX(-10deg) translateZ(0) translate3d(0px, 37px, 0px) !important;
     transition: visibility 0.25s, opacity 0.25s, transform 0.25s;
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: transform, box-shadow;
     box-shadow: 0 8px 26px -4px rgba(20, 20, 20, 0.15), 0 8px 9px -5px rgba(20, 20, 20, 0.06);
@@ -17362,7 +17359,6 @@ textarea.form-control-lg {
     pointer-events: none;
     animation: hide-navbar-dropdown 0.25s ease forwards;
     transition: visibility 0.25s, opacity 0.25s, transform 0.25s;
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: animation, box-shadow;
     box-shadow: 0 8px 26px -4px rgba(20, 20, 20, 0.15), 0 8px 9px -5px rgba(20, 20, 20, 0.06);
@@ -17494,7 +17490,6 @@ textarea.form-control-lg {
   opacity: 0;
   transform-origin: bottom;
   pointer-events: none;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform, box-shadow;
   animation: hide-navbar-dropdown 0.25s ease forwards;
@@ -18077,7 +18072,6 @@ svg.text-dark .color-background {
   transform-origin: 50% 0;
   transform-origin: 50% 0;
   transform: perspective(999px) rotateX(0deg) translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform, box-shadow;
 }
@@ -21744,7 +21738,6 @@ span.flatpickr-weekday {
 }
 
 .noUi-handle {
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   position: absolute;
 }
@@ -22244,4 +22237,4 @@ pre[class*=language-] {
   .ps {
     overflow: auto !important;
   }
-}/*# sourceMappingURL=argon-dashboard.css.map */
+}
