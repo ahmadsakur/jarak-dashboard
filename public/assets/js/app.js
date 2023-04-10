@@ -51,8 +51,13 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "ap1",
   forceTLS: true
 });
-
-// listen for the event
+var pusher = new Pusher("5c1274b066777330ada0", {
+  cluster: 'ap1'
+});
+var channel = pusher.subscribe('order');
+channel.bind('order-update', function (data) {
+  alert(JSON.stringify(data));
+});
 
 /***/ }),
 

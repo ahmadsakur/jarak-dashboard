@@ -93,11 +93,7 @@
             });
         });
 
-        // pusher event listener
-        // var channel = window.Echo.channel('order');
-        // channel.listen('order-update', function(data) {
-        //     alert(JSON.stringify(data));
-        // });
+
 
     </script>
     @stack('js');

@@ -27,8 +27,7 @@ window.Echo = new Echo({
     forceTLS: true,
 });
 
-// listen for the event
-var pusher = new Pusher('5c1274b066777330ada0', {
+var pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
     cluster: 'ap1'
 });
 
@@ -36,3 +35,5 @@ var channel = pusher.subscribe('order');
 channel.bind('order-update', function(data) {
     alert(JSON.stringify(data));
 });
+
+
