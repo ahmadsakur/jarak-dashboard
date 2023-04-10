@@ -28,4 +28,11 @@ window.Echo = new Echo({
 });
 
 // listen for the event
+var pusher = new Pusher('5c1274b066777330ada0', {
+    cluster: 'ap1'
+});
 
+var channel = pusher.subscribe('order');
+channel.bind('order-update', function(data) {
+    alert(JSON.stringify(data));
+});
