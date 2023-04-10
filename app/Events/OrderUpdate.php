@@ -28,7 +28,7 @@ class OrderUpdate implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['order'];
+        return new Channel('order');
     }
   
     public function broadcastAs()

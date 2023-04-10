@@ -66,8 +66,10 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="assets/js/plugins/jquery.dataTables.js"></script>
     <script src="assets/js/plugins/dropzone.min.js"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -90,12 +92,13 @@
 
             });
         });
+
+        // pusher event listener
+        var channel = window.Echo.channel('order');
+        channel.listen('order-update', function(data) {
+            alert('success');
+        });
     </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="assets/js/argon-dashboard.js"></script>
-    <script src="assets/js/broadcast.js"></script>
     @stack('js');
     @include('sweetalert::alert')
 
