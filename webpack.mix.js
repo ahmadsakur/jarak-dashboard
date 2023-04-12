@@ -1,6 +1,6 @@
 require("dotenv").config(); // Load environment variables
 const mix = require("laravel-mix");
-const Dotenv = require("dotenv-webpack");
+const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -27,6 +27,10 @@ mix.js(
     .disableNotifications()
     .webpackConfig({
         plugins: [
-            new Dotenv(), // Load environment variables into webpack
+            new webpack.DefinePlugin({
+                "process.env": {
+                    PUSHER_APP_KEY: JSON.stringify(process.env.MIX_PUSHER_APP_KEY),
+                },
+            }),
         ],
     });
