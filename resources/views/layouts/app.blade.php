@@ -52,18 +52,8 @@
                 </div>
             @endif
             @include('layouts.navbars.auth.sidenav')
-            <main class="main-content border-radius-lg position-relative" id="newOrderToastContainer">
-                <div class="position-absolute top-2 end-4">
-                    <div class="alert shadow-sm bg-body-tertiary rounded alert-dismissible fade show" role="alert" style="background: #e9ecef">
-                        <span class="alert-icon text-dark">
-                            <i class="fas fa-bell"></i>
-                        </span>
-                        <span class="alert-text text-dark text-sm ms-1"><strong>New Order!</strong> Check it now!</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="fas fa-times text-dark"></i></span>
-                        </button>
-                    </div>
-                </div>
+            <main class="main-content border-radius-lg position-relative" >
+                <div class="position-absolute top-2 end-4" id="alertContainer"></div>
                 @yield('content')
             </main>
         @endif

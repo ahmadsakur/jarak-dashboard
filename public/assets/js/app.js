@@ -55,9 +55,9 @@ var pusher = new Pusher("5c1274b066777330ada0", {
   cluster: "ap1"
 });
 var channel = pusher.subscribe("order");
+
+// Order update event
 channel.bind("order-update", function (data) {
-  // push data to local storage, if data is not empty and not null or undefined, 
-  // then push data to local storage
   if (data) {
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     if (notifications) {
@@ -71,8 +71,6 @@ channel.bind("order-update", function (data) {
   }
   getNotification();
 });
-
-// function to get notification badge
 var getNotification = function getNotification() {
   var notifications = JSON.parse(localStorage.getItem("notifications"));
   if (notifications) {
@@ -82,10 +80,20 @@ var getNotification = function getNotification() {
     return;
   }
 };
-// function to set notification badge
 var setNotification = function setNotification(count) {
   var badgeHtml = "\n        <span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">".concat(count, "\n            <span class=\"visually-hidden\">unread messages</span>\n        </span>");
   document.getElementById("notificationBadge").innerHTML = badgeHtml;
+};
+
+// Order-create event
+
+channel.bind("order-created", function (data) {
+  appendToast(data);
+});
+var appendToast = function appendToast(data) {
+  var alertMessage = "\n    <div class=\"alert shadow-sm bg-body-tertiary rounded alert-dismissible fade show\" role=\"alert\" style=\"background: #e9ecef\">\n      <span class=\"alert-icon text-dark\">\n        <i class=\"fas fa-bell\"></i>\n      </span>\n      <span class=\"alert-text text-dark text-sm ms-1\"><strong>New Order!</strong> Check it now!</span>\n      <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\">\n        <span aria-hidden=\"true\"><i class=\"fas fa-times text-dark\"></i></span>\n      </button>\n    </div>\n  ";
+  var alertContainer = document.getElementById("alertContainer");
+  alertContainer.insertAdjacentHTML("beforeend", alertMessage);
 };
 
 /***/ }),

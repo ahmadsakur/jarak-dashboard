@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\OrderCreated;
 use App\Events\OrderUpdate;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
@@ -32,5 +33,9 @@ Route::get('/transaction/{invoice}/status', [TransactionController::class, 'getO
 // test pusher
 Route::get('/test', function () {
     OrderUpdate::dispatch('Hello World');
-    return "Event has been sent!";
+    return "Order Updated";
+});
+Route::get('/test2', function () {
+    OrderCreated::dispatch('Order Created');
+    return "Order Created";
 });
