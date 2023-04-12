@@ -14,7 +14,7 @@
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             </div>
             <ul class="navbar-nav  justify-content-end">
-                
+
                 <li class="nav-item d-xl-none ps-3 pe-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
@@ -41,12 +41,13 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
+                    <a href="javascript:;" class="nav-link text-white p-0 position-relative" id="notificationDropdown"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bell cursor-pointer"></i>
+                        <i class="fa fa-bell fixed-plugin-button-nav cursor-pointer"></i>
+                        <div id="notificationBadge"></div>
                     </a>
                     <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
-                        aria-labelledby="dropdownMenuButton">
+                        aria-labelledby="dropdownMenuButton" id="notificationContent">
                         <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="javascript:;">
                                 <div class="d-flex py-1">

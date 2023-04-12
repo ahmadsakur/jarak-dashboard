@@ -52,7 +52,18 @@
                 </div>
             @endif
             @include('layouts.navbars.auth.sidenav')
-            <main class="main-content border-radius-lg">
+            <main class="main-content border-radius-lg position-relative" id="newOrderToastContainer">
+                <div class="position-absolute top-2 end-4">
+                    <div class="alert shadow-sm bg-body-tertiary rounded alert-dismissible fade show" role="alert" style="background: #e9ecef">
+                        <span class="alert-icon text-dark">
+                            <i class="fas fa-bell"></i>
+                        </span>
+                        <span class="alert-text text-dark text-sm ms-1"><strong>New Order!</strong> Check it now!</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="fas fa-times text-dark"></i></span>
+                        </button>
+                    </div>
+                </div>
                 @yield('content')
             </main>
         @endif
@@ -89,15 +100,12 @@
             $('#variantDatatable').DataTable();
             $('#transactionDatatable').DataTable({
                 "scrollX": true,
-
             });
         });
-
-
-
     </script>
     @stack('js');
     @include('sweetalert::alert')
+
 
 </body>
 
