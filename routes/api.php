@@ -32,7 +32,11 @@ Route::get('/transaction/{invoice}/status', [TransactionController::class, 'getO
 
 // test pusher
 Route::get('/test', function () {
-    OrderUpdate::dispatch('Hello World');
+    $data = json_decode('{
+        "id": "123",
+        "status": "PAID"
+    }');
+    OrderUpdate::dispatch($data);
     return "Order Updated";
 });
 Route::get('/test2', function () {

@@ -33,24 +33,66 @@ channel.bind("order-update", function (data) {
         }
     }
     getNotification();
+    setNotificationContent(data.message);
 });
 
 const getNotification = () => {
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    if (notifications) {
-        var count = notifications.length;
-        setNotification(count);
-    } else {
-        return;
-    }
-};
-const setNotification = (count) => {
     var badgeHtml = `
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">${count}
-            <span class="visually-hidden">unread messages</span>
-        </span>`;
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger" id="notificationBadge">
+    <i class="fas fa-info"></i>
+        <span class="visually-hidden">unread messages</span>
+    </span>`;
     document.getElementById("notificationBadge").innerHTML = badgeHtml;
 };
+
+const setNotificationContent = (data) => {
+    let notificationContainer = document.getElementById(
+        "notificationContainer"
+    );
+
+    let notificationContent = `
+    <li class="mb-2">
+        <a class="dropdown-item border-radius-md" href="javascript:;">
+            <div class="d-flex py-1">
+                <div class="my-auto">
+                    <img src="./img/small-logos/logo-info.svg"
+                        class="avatar avatar-sm text-light me-3 ">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <h6 class="text-sm font-weight-normal mb-1 text-dark" style="color: #344767 !important;">
+                        <span class="font-weight-bold text-dark">Order Update</span> by ${data.status}
+                    </h6>
+                    <p class="text-xs mb-0 text-dark">
+                        <i class="fas fa-shopping-cart  me-1"></i>
+                        Table ${data.id} | ${data.status}
+                    </p>
+                </div>
+            </div>
+        </a>
+    </li>`;
+
+    notificationContainer.insertAdjacentHTML("beforeend", notificationContent);
+};
+
+// onclick event for notification badge
+const notificationBadge = document.getElementById("notificationBadge");
+const notificationContainer = document.getElementById("notificationContainer");
+notificationContainer.onclick = function () {
+    notificationBadge.remove();
+};
+
+// load notification on container
+const notificationDropdown = document.getElementById("notificationDropdown");
+notificationDropdown.addEventListener("click", function () {
+    notificationContainer.innerHTML = "";
+    const datas = localStorage.getItem("notifications");
+    if (datas) {
+        const data = JSON.parse(datas);
+        data.forEach((element) => {
+            setNotificationContent(element.message);
+        });
+    }
+});
 
 // Order-create event
 

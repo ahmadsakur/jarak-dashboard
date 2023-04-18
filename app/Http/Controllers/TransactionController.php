@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreated;
 use App\Models\Transaction;
 use App\Models\Variant;
 use Illuminate\Http\Request;
@@ -89,6 +90,10 @@ class TransactionController extends Controller
         // Send Request to Tripay
         $tripay = new TripayController();
         $res = $tripay->createPaymentRequest($method_code, $totalPrice, $products, $user);
+
+        // send event
+        OrderCreated::dispatch('Order Created');
+
 
         $returnedData = $res;
         $data = json_decode($returnedData->getContent(), true);

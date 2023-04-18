@@ -52,20 +52,37 @@ channel.bind("order-update", function (data) {
     }
   }
   getNotification();
+  setNotificationContent(data.message);
 });
 var getNotification = function getNotification() {
-  var notifications = JSON.parse(localStorage.getItem("notifications"));
-  if (notifications) {
-    var count = notifications.length;
-    setNotification(count);
-  } else {
-    return;
-  }
-};
-var setNotification = function setNotification(count) {
-  var badgeHtml = "\n        <span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">".concat(count, "\n            <span class=\"visually-hidden\">unread messages</span>\n        </span>");
+  var badgeHtml = "\n    <span class=\"position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger\" id=\"notificationBadge\">\n    <i class=\"fas fa-info\"></i>\n        <span class=\"visually-hidden\">unread messages</span>\n    </span>";
   document.getElementById("notificationBadge").innerHTML = badgeHtml;
 };
+var setNotificationContent = function setNotificationContent(data) {
+  var notificationContainer = document.getElementById("notificationContainer");
+  var notificationContent = "\n    <li class=\"mb-2\">\n        <a class=\"dropdown-item border-radius-md\" href=\"javascript:;\">\n            <div class=\"d-flex py-1\">\n                <div class=\"my-auto\">\n                    <img src=\"./img/small-logos/logo-info.svg\"\n                        class=\"avatar avatar-sm text-light me-3 \">\n                </div>\n                <div class=\"d-flex flex-column justify-content-center\">\n                    <h6 class=\"text-sm font-weight-normal mb-1 text-dark\" style=\"color: #344767 !important;\">\n                        <span class=\"font-weight-bold text-dark\">Order Update</span> by ".concat(data.status, "\n                    </h6>\n                    <p class=\"text-xs mb-0 text-dark\">\n                        <i class=\"fas fa-shopping-cart  me-1\"></i>\n                        Table ").concat(data.id, " | ").concat(data.status, "\n                    </p>\n                </div>\n            </div>\n        </a>\n    </li>");
+  notificationContainer.insertAdjacentHTML("beforeend", notificationContent);
+};
+
+// onclick event for notification badge
+var notificationBadge = document.getElementById("notificationBadge");
+var notificationContainer = document.getElementById("notificationContainer");
+notificationContainer.onclick = function () {
+  notificationBadge.remove();
+};
+
+// load notification on container
+var notificationDropdown = document.getElementById("notificationDropdown");
+notificationDropdown.addEventListener("click", function () {
+  notificationContainer.innerHTML = "";
+  var datas = localStorage.getItem("notifications");
+  if (datas) {
+    var data = JSON.parse(datas);
+    data.forEach(function (element) {
+      setNotificationContent(element.message);
+    });
+  }
+});
 
 // Order-create event
 
