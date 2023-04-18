@@ -13,7 +13,7 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::all()->sortBy('created_at');
         return view('pages.transactions', compact('transactions'));
     }
 
@@ -29,7 +29,6 @@ class TransactionController extends Controller
             'items.*.variant_name' => 'required|string',
             'items.*.price' => 'required|numeric|min:0',
             'items.*.quantity' => 'required|integer|min:1',
-            'items.*.isSoldOut' => 'required|boolean',
             // Order Form Validation
             'orderForm.name' => 'required|string',
             'orderForm.whatsappNumber' => 'required|string',
