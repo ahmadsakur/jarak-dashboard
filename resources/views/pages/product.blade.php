@@ -297,7 +297,7 @@
                     $('#edit-isSold').prop('checked', res[0].isSoldOut);
                     $('#thumbnail-preview').attr('src', res[0].imageUrl)
                     $('#thumbnail-preview').attr('alt', res[0].name)
-                    isSoldLabel.text(res[0].isSoldOut === 1 ? 'Sold' : 'Available')
+                    isSoldLabel.text(res[0].isSoldOut === 1 || "1" || true ? 'Sold' : 'Available')
 
                 }
 

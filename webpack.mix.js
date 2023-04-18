@@ -1,4 +1,6 @@
-const mix = require('laravel-mix');
+require("dotenv").config(); // Load environment variables
+const mix = require("laravel-mix");
+const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +13,24 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/assets/js/argon-dashboard.js')
-    .sass('resources/scss/argon-dashboard.scss', 'public/assets/css/argon-dashboard.css', [
-        //
-    ]);
+mix.js(
+    ["resources/js/app.js", "resources/js/bootstrap.js"],
+    "public/assets/js/app.js"
+)
+    .sass(
+        "resources/scss/argon-dashboard.scss",
+        "public/assets/css/argon-dashboard.css",
+        [
+            //
+        ]
+    )
+    .disableNotifications()
+    .webpackConfig({
+        plugins: [
+            new webpack.DefinePlugin({
+                "process.env": {
+                    PUSHER_APP_KEY: JSON.stringify(process.env.MIX_PUSHER_APP_KEY),
+                },
+            }),
+        ],
+    });

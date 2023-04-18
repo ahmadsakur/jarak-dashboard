@@ -30,6 +30,10 @@ class Product extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'isSoldOut' => 'boolean'
+    ];
+
     /**
      * Get the category that owns the product.
      */

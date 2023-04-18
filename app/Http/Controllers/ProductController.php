@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         //
         $categories = Category::all();
-        $products = Product::all();
+        $products = Product::all()->sortBy('name');
         return view('pages.product', compact('categories', 'products'));
     }
 

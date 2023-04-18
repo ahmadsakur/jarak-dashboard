@@ -66,7 +66,7 @@
                                     </h5>
                                     <p class="mb-0">
                                         <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                        since last quarter
+                                        since last month
                                     </p>
                                 </div>
                             </div>

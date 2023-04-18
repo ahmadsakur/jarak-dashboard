@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\OrderCreated;
+use App\Events\OrderUpdate;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TripayController;
@@ -26,3 +28,18 @@ Route::post('/create-orders', [TransactionController::class, 'create'])->name('t
 Route::get('/merchant-channel', [TripayController::class, 'merchantChannel'])->name('merchant-channel');
 Route::get('/transaction/{invoice}', [TripayController::class, 'getOrderDetails'])->name('transaction.detail');
 Route::get('/transaction/{invoice}/status', [TransactionController::class, 'getOrderStatus'])->name('transaction.status');
+
+
+// test pusher
+Route::get('/test', function () {
+    $data = json_decode('{
+        "id": "123",
+        "status": "PAID"
+    }');
+    OrderUpdate::dispatch($data);
+    return "Order Updated";
+});
+Route::get('/test2', function () {
+    OrderCreated::dispatch('Order Created');
+    return "Order Created";
+});

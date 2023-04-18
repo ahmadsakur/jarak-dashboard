@@ -18,7 +18,7 @@ class VariantController extends Controller
     public function index()
     {
         //get variant with product
-        $variants = Variant::all();
+        $variants = Variant::with('product')->get()->sortBy('product.name');
         $products = Product::get();
         return view('pages.variant', compact('products', 'variants'));
     }
