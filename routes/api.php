@@ -33,10 +33,10 @@ Route::post('/transaction/callback-handler', [TripayController::class, 'handleCa
 
 // test pusher
 Route::get('/test', function () {
-    $data = json_decode('{
-        "id": "123",
-        "status": "PAID"
-    }');
+    $data = [
+        'id' => '1234',
+        'status' => 'pending',
+    ];
     OrderUpdate::dispatch($data);
     return "Order Updated";
 });

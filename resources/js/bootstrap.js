@@ -18,7 +18,6 @@ var channel = pusher.subscribe("order");
 
 // Order update event
 channel.bind("order-update", function (data) {
-    console.log(data)
     if (data) {
         var notifications = JSON.parse(localStorage.getItem("notifications"));
         if (notifications) {
