@@ -154,7 +154,7 @@
                         @csrf
                         <div class="modal-content">
                             <div class="modal-header d-flex align-items-center">
-                                <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Detail</h5>
+                                <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Details</h5>
                                 <div class="dropdown text-sm" id="dropdown-status">
                                     <input type="hidden" name="transaction_id" id="transactionIdInput">
                                     <select class="form-select" name="status" id="transactionStatusSelect"
@@ -235,7 +235,7 @@
                         );
 
                         // set transaction status dropdown to hidden
-                        $('#dropdown-status').hide();
+                        // $('#dropdown-status').hide();
                     },
                     success: function(data) {
                         let tbody = $('#transactionDetailTable');
@@ -277,12 +277,12 @@
                     error: function(error) {
                         let tbody = $('#transactionDetailTable');
                         let dropdown = $('#dropdown-status');
-                        let notes = $('#notesContainer');
+                        let notes = $('#notes-content');
                         
                         
-                        dropdown.empty();
+                        dropdown.hide();
+                        notes.empty();
                         tbody.empty(); // Clear existing data
-                        notes.hide();
                         tbody.append(
                             `<tr>
                                 <td colspan="4" class="text-center">
