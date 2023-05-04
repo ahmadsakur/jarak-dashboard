@@ -25,12 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Chart Data
         $transactions = Transaction::select('created_at')
             ->where('created_at', '>=', Carbon::now()->subDays(7)->toDateString())
             ->orderBy('created_at')
             ->get();
 
-        // Calculate the daily transaction totals
         $salesData = [];
         foreach ($transactions as $transaction) {
             $date = $transaction->created_at->format('Y-m-d');
@@ -39,12 +39,23 @@ class HomeController extends Controller
             }
             $salesData[$date] += 1;
         }
-
-        // Map the sales data to a JavaScript array variable in the view
         $chartData = collect($salesData)->map(function ($total, $date) {
             return ['date' => Carbon::parse($date)->format('M d'), 'total' => $total];
         })->values();
 
-        return view('pages.dashboard', compact('chartData'));
+        // Timeline Data
+        $today = Transaction::whereDate('created_at', today())->get();
+        $week = Transaction::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->get();
+        $month = Transaction::whereMonth('created_at', today()->month)->get();
+        $all = Transaction::all();
+
+        $timeline = [
+            'today' => $today->count(),
+            'week' => $week->count(),
+            'month' => $month->count(),
+            'all' => $all->count(),
+        ];
+
+        return view('pages.dashboard', compact('chartData', 'timeline'));
     }
 }

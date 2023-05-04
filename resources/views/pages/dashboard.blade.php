@@ -118,7 +118,7 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="card">
+                <div class="card h-100">
                     <div class="card-header pb-0 p-3">
                         <h6 class="mb-0">Categories</h6>
                     </div>
@@ -127,68 +127,101 @@
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                 <div class="d-flex align-items-center">
                                     <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                                        <i class="ni ni-mobile-button text-white opacity-10"></i>
+                                        <i class="fa fa-calendar-day text-white opacity-10"></i>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark text-sm">Devices</h6>
-                                        <span class="text-xs">250 in stock, <span class="font-weight-bold">346+
-                                                sold</span></span>
+                                        <h6 class="mb-1 text-dark text-sm">Today</h6>
+                                        <span class="text-xs"><i class="fas fa-arrow-up me-2 text-success"></i>
+                                            @if ($timeline['today'] == 0)
+                                                <p>No transactions Today</p>
+                                            @else
+                                                {{ $timeline['today'] }} Orders
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <button
-                                        class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                            class="ni ni-bold-right" aria-hidden="true"></i></button>
+                                    <a href="{{ route('transaction.index') }}">
+                                        <button
+                                            class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
+                                                class="ni ni-bold-right" aria-hidden="true">
+                                            </i></button>
+                                    </a>
                                 </div>
                             </li>
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                 <div class="d-flex align-items-center">
                                     <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                                        <i class="ni ni-tag text-white opacity-10"></i>
+                                        <i class="fa fa-calendar-week text-white opacity-10"></i>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark text-sm">Tickets</h6>
-                                        <span class="text-xs">123 closed, <span class="font-weight-bold">15
-                                                open</span></span>
+                                        <h6 class="mb-1 text-dark text-sm">This Week</h6>
+                                        <span class="text-xs"><i class="fas fa-arrow-up me-2 text-success"></i>
+                                            @if ($timeline['week'] == 0)
+                                                <p>No transactions this Week</p>
+                                            @else
+                                                {{ $timeline['week'] }} Orders
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <button
-                                        class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                            class="ni ni-bold-right" aria-hidden="true"></i></button>
+                                    <a href="{{ route('transaction.weekly') }}">
+                                        <button
+                                            class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
+                                                class="ni ni-bold-right" aria-hidden="true">
+                                            </i></button>
+                                    </a>
                                 </div>
                             </li>
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                 <div class="d-flex align-items-center">
                                     <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                                        <i class="ni ni-box-2 text-white opacity-10"></i>
+                                        <i class="fa fa-calendar text-white opacity-10"></i>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark text-sm">Error logs</h6>
-                                        <span class="text-xs">1 is active, <span class="font-weight-bold">40
-                                                closed</span></span>
+                                        <h6 class="mb-1 text-dark text-sm">This Month</h6>
+                                        <span class="text-xs"><i class="fas fa-arrow-up me-2 text-success"></i>
+                                            @if ($timeline['month'] == 0)
+                                                <p>No transactions this Month</p>
+                                            @else
+                                                {{ $timeline['month'] }} Orders
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <button
-                                        class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                            class="ni ni-bold-right" aria-hidden="true"></i></button>
+                                    <a href="{{ route('transaction.monthly') }}">
+                                        <button
+                                            class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
+                                                class="ni ni-bold-right" aria-hidden="true">
+                                            </i></button>
+                                    </a>
                                 </div>
                             </li>
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
                                 <div class="d-flex align-items-center">
                                     <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                                        <i class="ni ni-satisfied text-white opacity-10"></i>
+                                        <i class="fa fa-calendar-o text-white opacity-10"></i>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark text-sm">Happy users</h6>
-                                        <span class="text-xs font-weight-bold">+ 430</span>
+                                        <h6 class="mb-1 text-dark text-sm">All Time</h6>
+                                        <span class="text-xs"><i class="fas fa-arrow-up me-2 text-success"></i>
+                                            @if ($timeline['all'] == 0)
+                                                <p>No transactions Found</p>
+                                            @else
+                                                {{ $timeline['all'] }} Orders
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
-                                    <button
-                                        class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                            class="ni ni-bold-right" aria-hidden="true"></i></button>
+                                    <a href="{{ route('transaction.all') }}">
+                                        <button
+                                            class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
+                                                class="ni ni-bold-right" aria-hidden="true">
+                                            </i></button>
+                                    </a>
                                 </div>
                             </li>
                         </ul>
@@ -196,7 +229,6 @@
                 </div>
             </div>
         </div>
-        {{-- @include('layouts.footers.auth.footer') --}}
     </div>
 @endsection
 
@@ -214,7 +246,9 @@
         new Chart(ctx1, {
             type: "line",
             data: {
-                labels: salesData.map(function (data) { return data.date; }),
+                labels: salesData.map(function(data) {
+                    return data.date;
+                }),
                 datasets: [{
                     label: 'Sales',
                     tension: 0.4,
@@ -224,7 +258,9 @@
                     backgroundColor: gradientStroke1,
                     borderWidth: 3,
                     fill: true,
-                    data: salesData.map(function (data) { return data.total; }),
+                    data: salesData.map(function(data) {
+                        return data.total;
+                    }),
                     maxBarThickness: 6
 
                 }],
