@@ -27,9 +27,33 @@
             <li class="nav-item">
                 <a class="nav-link {{ Route::currentRouteName() == 'transaction.index' ? 'active' : '' }}" href="{{ route('transaction.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-dark text-sm opacity-10"></i>
+                        <i class="fa fa-calendar-day text-dark text-sm opacity-10"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Order Table</span>
+                    <span class="nav-link-text ms-1">Today</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'transaction.weekly' ? 'active' : '' }}" href="{{ route('transaction.weekly') }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-calendar-week text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Weekly</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'transaction.monthly' ? 'active' : '' }}" href="{{ route('transaction.monthly') }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-calendar text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Monthly</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'transaction.all' ? 'active' : '' }}" href="{{ route('transaction.all') }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-calendar-o text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">All Time</span>
                 </a>
             </li>
             <li class="nav-item mt-3">

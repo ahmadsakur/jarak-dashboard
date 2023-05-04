@@ -17,12 +17,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h5>Transaction Table</h5>
                         <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal"
-                            data-bs-target="#insertCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> External
-                            Link</a>
+                            data-bs-target="#insertCategoryModal">Tripay Dashboard
+                        </a>
                     </div>
                     <div class="p-4">
                         <table class="table align-items-center mb-0" id="transactionDatatable" style="width: 100%">
@@ -154,7 +153,7 @@
                         @csrf
                         <div class="modal-content">
                             <div class="modal-header d-flex align-items-center">
-                                <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Detail</h5>
+                                <h5 class="modal-title" id="transactionDetailModalTitle">Transaction Details</h5>
                                 <div class="dropdown text-sm" id="dropdown-status">
                                     <input type="hidden" name="transaction_id" id="transactionIdInput">
                                     <select class="form-select" name="status" id="transactionStatusSelect"
@@ -235,7 +234,7 @@
                         );
 
                         // set transaction status dropdown to hidden
-                        $('#dropdown-status').hide();
+                        // $('#dropdown-status').hide();
                     },
                     success: function(data) {
                         let tbody = $('#transactionDetailTable');
@@ -277,12 +276,12 @@
                     error: function(error) {
                         let tbody = $('#transactionDetailTable');
                         let dropdown = $('#dropdown-status');
-                        let notes = $('#notesContainer');
-                        
-                        
-                        dropdown.empty();
+                        let notes = $('#notes-content');
+
+
+                        dropdown.hide();
+                        notes.empty();
                         tbody.empty(); // Clear existing data
-                        notes.hide();
                         tbody.append(
                             `<tr>
                                 <td colspan="4" class="text-center">

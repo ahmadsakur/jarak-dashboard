@@ -60,18 +60,18 @@ const setNotificationContent = (data) => {
                 </div>
                 <div class="d-flex flex-column justify-content-center">
                     <h6 class="text-sm font-weight-normal mb-1 text-dark" style="color: #344767 !important;">
-                        <span class="font-weight-bold text-dark">Order Update</span> by ${data.status}
+                        <span class="font-weight-bold text-dark">Order ${data.status}</span> by ${data.id}
                     </h6>
                     <p class="text-xs mb-0 text-dark">
                         <i class="fas fa-shopping-cart  me-1"></i>
-                        Table ${data.id} | ${data.status}
+                        Table UPDATE PAYLOAD
                     </p>
                 </div>
             </div>
         </a>
     </li>`;
 
-    notificationContainer.insertAdjacentHTML("beforeend", notificationContent);
+    notificationContainer.insertAdjacentHTML("afterbegin", notificationContent);
 };
 
 // onclick event for notification badge
