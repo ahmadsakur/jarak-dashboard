@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,19 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Payment Status
+        $paid = Transaction::whereDate('created_at', today())->where('transaction_status', 'CONFIRMED')->count();
+        $processed = Transaction::whereDate('created_at', today())->where('transaction_status', 'PROCESSED')->count();
+        $completed = Transaction::whereDate('created_at', today())->where('transaction_status', 'COMPLETED')->count();
+        $cancelled = Transaction::whereDate('created_at', today())->where('transaction_status', 'CANCELLED')->count();
+
+        $statusCounts = [
+            'paid' => $paid,
+            'processed' => $processed,
+            'completed' => $completed,
+            'cancelled' => $cancelled,
+        ];
+
         // Chart Data
         $transactions = Transaction::select('created_at')
             ->where('created_at', '>=', Carbon::now()->subDays(7)->toDateString())
@@ -56,6 +70,6 @@ class HomeController extends Controller
             'all' => $all->count(),
         ];
 
-        return view('pages.dashboard', compact('chartData', 'timeline'));
+        return view('pages.dashboard', compact('statusCounts','chartData', 'timeline'));
     }
 }

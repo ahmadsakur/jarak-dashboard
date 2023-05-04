@@ -182,14 +182,18 @@ class TripayController extends Controller
             switch ($status) {
                 case 'PAID':
                     $invoice->update(['payment_status' => 'PAID']);
+                    $invoice->update(['transaction_status' => 'CONFIRMED']);
                     break;
 
                 case 'EXPIRED':
                     $invoice->update(['payment_status' => 'EXPIRED']);
+                    $invoice->update(['transaction_status' => 'CANCELLED']);
+
                     break;
 
                 case 'FAILED':
                     $invoice->update(['payment_status' => 'FAILED']);
+                    $invoice->update(['transaction_status' => 'CANCELLED']);
                     break;
 
                 default:
