@@ -17,7 +17,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h5>Transaction Table</h5>
                         <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal"
