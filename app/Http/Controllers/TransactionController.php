@@ -14,6 +14,28 @@ class TransactionController extends Controller
 
     public function index()
     {
+        // get today transactions
+        $transactions = Transaction::whereDate('created_at', today())->get()->sortBy('created_at');
+        return view('pages.transactions', compact('transactions'));
+    }
+
+    public function getWeeklyTransaction()
+    {
+        // get weekly transactions
+        $transactions = Transaction::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->get()->sortBy('created_at');
+        return view('pages.transactions', compact('transactions'));
+    }
+
+    public function getMonthlyTransaction()
+    {
+        // get monthly transactions
+        $transactions = Transaction::whereMonth('created_at', today()->month)->get()->sortBy('created_at');
+        return view('pages.transactions', compact('transactions'));
+    }
+
+    public function getAllTransactions()
+    {
+        // get all transactions
         $transactions = Transaction::all()->sortBy('created_at');
         return view('pages.transactions', compact('transactions'));
     }

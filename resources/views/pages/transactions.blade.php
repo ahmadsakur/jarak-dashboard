@@ -21,8 +21,8 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h5>Transaction Table</h5>
                         <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal"
-                            data-bs-target="#insertCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> External
-                            Link</a>
+                            data-bs-target="#insertCategoryModal">Tripay Dashboard
+                        </a>
                     </div>
                     <div class="p-4">
                         <table class="table align-items-center mb-0" id="transactionDatatable" style="width: 100%">
@@ -278,8 +278,8 @@
                         let tbody = $('#transactionDetailTable');
                         let dropdown = $('#dropdown-status');
                         let notes = $('#notes-content');
-                        
-                        
+
+
                         dropdown.hide();
                         notes.empty();
                         tbody.empty(); // Clear existing data

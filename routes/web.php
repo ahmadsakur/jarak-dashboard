@@ -52,4 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
 	Route::patch('/transactions/{id}', [TransactionController::class, 'updateOrderStatus'])->name('transaction.update');
 	Route::get('/transactions/{id}', [TransactionController::class, 'getOrderItems'])->name('transaction.detail');
+	Route::get('/transactions-week', [TransactionController::class, 'getWeeklyTransaction'])->name('transaction.weekly');
+	Route::get('/transactions-month', [TransactionController::class, 'getMonthlyTransaction'])->name('transaction.monthly');
+	Route::get('/transactions-all', [TransactionController::class, 'getAllTransactions'])->name('transaction.all');
 });
