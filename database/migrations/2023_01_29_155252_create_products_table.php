@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('imageUrl');
             $table->boolean('isSoldOut');
             $table->foreignUuid('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->nullOnDelete()->onUpdate('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete()->onUpdate('cascade');
             $table->timestamps();
         });
     }
