@@ -182,7 +182,7 @@
                         @method('DELETE')
                         @csrf
                         <div class="modal-body">
-                            <p>Do You want to Delete this product ?</p>
+                            <p>Do You want to Delete this product variant ?</p>
                             <input type="hidden" name="id" id="delete-id">
                         </div>
                         <div class="modal-footer">

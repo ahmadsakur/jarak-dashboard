@@ -17,7 +17,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h5>Category Table</h5>
                         <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal"
@@ -34,7 +33,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Description
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Action
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action
                                     </th>
                                 </tr>
                             </thead>

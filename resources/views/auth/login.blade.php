@@ -47,11 +47,11 @@
                             <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
                                 style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
               background-size: cover;">
-                                <span class="mask bg-gradient-primary opacity-6"></span>
-                                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the new
-                                    currency"</h4>
-                                <p class="text-white position-relative">The more effortless the writing looks, the more
-                                    effort the writer actually put into the process.</p>
+                                <span class="mask bg-gradient-secondary opacity-6"></span>
+                                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Welcome to Jarak Admin Dashboard"</h4>
+                                <p class="text-white position-relative">
+                                    "Jarak is a web-based application that can help you to manage your store, and track in the transaction process."
+                                </p>
                             </div>
                         </div>
                     </div>

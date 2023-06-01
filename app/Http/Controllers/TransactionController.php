@@ -195,7 +195,7 @@ class TransactionController extends Controller
         Transaction::where('transaction_id', $request["transaction_id"])->update([
             "transaction_status" => $request["status"],
         ]);
-        return redirect('/transactions')->with('toast_success', 'Category Updated Successfully');
+        return redirect('/transactions')->with('toast_success', 'Stat7us Updated Successfully');
     }
 
     public function getVariantDetails($id)
