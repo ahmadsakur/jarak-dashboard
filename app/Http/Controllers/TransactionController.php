@@ -36,7 +36,7 @@ class TransactionController extends Controller
     public function getAllTransactions()
     {
         // get all transactions
-        $transactions = Transaction::all()->sortBy('created_at');
+        $transactions = Transaction::orderBy('created_at', 'desc')->get();
         return view('pages.transactions', compact('transactions'));
     }
 
