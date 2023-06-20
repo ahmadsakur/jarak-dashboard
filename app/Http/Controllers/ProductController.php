@@ -149,7 +149,9 @@ class ProductController extends Controller
     {
         // get all category
         $categories = Category::all();
-        $products = Product::with('variants')->get();
+        // $products = Product::with('variants')->get();
+        $products = Product::has('variants')->with('variants')->get();
+
         $data = [
             "categories" => $categories,
             "products" => $products

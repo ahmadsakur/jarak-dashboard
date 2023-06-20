@@ -50,7 +50,7 @@
                                         <td class="text-xs font-weight-bold mb-0 align-top">{{ $key + 1 }}</td>
                                         <td class="text-xs font-weight-bold mb-0 align-top">{{ $product->name }}</td>
 
-                                        <td class="text-xs mb-0 text-wrap">
+                                        <td class="text-xs mb-0 text-wrap align-top">
                                             {{ $product->description }}
                                         </td>
                                         <td class="align-top text-center text-sm">

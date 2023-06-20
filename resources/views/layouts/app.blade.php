@@ -81,10 +81,10 @@
         }
         $(document).ready(function() {
             $('#categoryDatatable').DataTable({
-                "scrollX": true
+                // "scrollX": true
             });
             $('#productDatatable').DataTable({
-                "scrollX": true
+                // "scrollX": true
             });
             $('#variantDatatable').DataTable();
             $('#transactionDatatable').DataTable({

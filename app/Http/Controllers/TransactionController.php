@@ -36,7 +36,7 @@ class TransactionController extends Controller
     public function getAllTransactions()
     {
         // get all transactions
-        $transactions = Transaction::all()->sortBy('created_at');
+        $transactions = Transaction::orderBy('created_at', 'desc')->get();
         return view('pages.transactions', compact('transactions'));
     }
 
@@ -195,7 +195,7 @@ class TransactionController extends Controller
         Transaction::where('transaction_id', $request["transaction_id"])->update([
             "transaction_status" => $request["status"],
         ]);
-        return redirect('/transactions')->with('toast_success', 'Category Updated Successfully');
+        return redirect('/transactions')->with('toast_success', 'Stat7us Updated Successfully');
     }
 
     public function getVariantDetails($id)
