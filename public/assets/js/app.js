@@ -33,7 +33,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/dist/browser/axios.cjs");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-var pusher = new Pusher("5c1274b066777330ada0", {
+var pusher = new Pusher("YOUR_PUSHER_KEY", {
   cluster: "ap1"
 });
 var channel = pusher.subscribe("order");

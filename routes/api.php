@@ -31,16 +31,3 @@ Route::get('/transaction/{invoice}/status', [TransactionController::class, 'getO
 Route::post('/transaction/callback-handler', [TripayController::class, 'handleCallback'])->name('transaction.status.update');
 
 
-// test pusher
-Route::get('/test', function () {
-    $data = [
-        'id' => '1234',
-        'status' => 'pending',
-    ];
-    OrderUpdate::dispatch($data);
-    return "Order Updated";
-});
-Route::get('/test2', function () {
-    OrderCreated::dispatch('Order Created');
-    return "Order Created";
-});
